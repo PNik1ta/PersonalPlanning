@@ -1,0 +1,36 @@
+﻿<Window x:Class="TaskList.Views.addContactWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskList.Views"
+        mc:Ignorable="d"
+        Title="addContactWindow" Height="450" Width="800" Closing="Window_Closing" MaxHeight="450" MaxWidth="800">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Light.xaml"></ResourceDictionary>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.3*"/>
+            <ColumnDefinition Width="0.7*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Column="0">
+            <Label Content="Name" Style="{DynamicResource LabelStyle}"/>
+            <Label Content="Surname" Style="{DynamicResource LabelStyle}"/>
+            <Label Content="Phone number" Style="{DynamicResource LabelStyle}"/>
+        </StackPanel>
+
+        <StackPanel Grid.Column="1">
+            <TextBox x:Name="nameTB" Height="25" Margin="0 15 0 0" Style="{DynamicResource TBStyle}"/>
+            <TextBox x:Name="surnameTB" Height="25" Margin="0 15 0 0" Style="{DynamicResource TBStyle}"/>
+            <TextBox x:Name="numberTB" Height="25" Margin="0 15 0 0" Style="{DynamicResource TBStyle}"/>
+            <Button x:Name="addBtn" Content="Add" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Height="50"></Button>
+        </StackPanel>
+    </Grid>
+</Window>
