@@ -8,7 +8,7 @@
         xmlns:DV="clr-namespace:System.Windows.Controls.DataVisualization;assembly=System.Windows.Controls.DataVisualization.Toolkit"  
         xmlns:DVC="clr-namespace:System.Windows.Controls.DataVisualization.Charting;assembly=System.Windows.Controls.DataVisualization.Toolkit" xmlns:Themes="clr-namespace:Microsoft.Windows.Themes;assembly=PresentationFramework.Aero2" x:Class="TaskList.Views.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Loaded="Window_Loaded" Closing="Window_Closing" MinWidth="1000" MinHeight="750"
+        Title="MainWindow" Loaded="Window_Loaded" Closing="Window_Closing" MinWidth="1000" MinHeight="850"
         >
 
 
@@ -113,6 +113,13 @@
                 </StackPanel>
             </Button>
 
+            <Button  x:Name="helpBtn" Margin="0 5" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="helpBtn_Click">
+                <StackPanel Orientation="Horizontal">
+                    <Image HorizontalAlignment="Left" Source="../Images/helpImg.png" Height="32" Width="32"/>
+                    <Label Content="Help" Style="{DynamicResource LabelStyle}"/>
+                </StackPanel>
+            </Button>
+
 
             <Button  x:Name="exitBtn" Margin="0 5" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="exitBtn_Click">
                 <StackPanel Orientation="Horizontal">
@@ -124,44 +131,54 @@
         </StackPanel>
 
 
-        <StackPanel x:Name="personSP_1" Grid.Column="1" Orientation="Vertical">
+        <StackPanel x:Name="personSP_1" Margin="0 150 0 0" Grid.Column="1" Orientation="Vertical">
             <Label Content="Name" Style="{DynamicResource LabelStyle}"/>
             <Label  Content="Surname" Style="{DynamicResource LabelStyle}"/>
             <Label  Content="Age" Style="{DynamicResource LabelStyle}"/>
             <Label Content="Level" Style="{DynamicResource LabelStyle}"/>
         </StackPanel>
 
-        <StackPanel x:Name="personSP_2" Grid.Column="2" Orientation="Vertical" Width="300" HorizontalAlignment="Left">
+        <StackPanel x:Name="personSP_2" Margin="0 150 0 0" Grid.Column="2" Orientation="Vertical" Width="300" HorizontalAlignment="Left">
             <Label x:Name="pName"  Width="300" HorizontalAlignment="Left" Style="{DynamicResource LabelStyle}"/>
             <Label x:Name="pSurname"  Width="300" HorizontalAlignment="Left" Style="{DynamicResource LabelStyle}"/>
             <Label x:Name="pAge"  Width="300" HorizontalAlignment="Left" Style="{DynamicResource LabelStyle}"/>
             <Label x:Name="pLevel" Width="300" HorizontalAlignment="Left" Style="{DynamicResource LabelStyle}"/>
         </StackPanel>
 
-        <ListView x:Name="tasksLB" Grid.Column="2" VerticalAlignment="Top" Height="200" Visibility="Hidden" Width="auto" Style="{DynamicResource LBTemplate}" Grid.ColumnSpan="2"/>
+        <StackPanel x:Name="personAvatarSP" Grid.Column="3">
+            <Ellipse Height="100" Width="100" Grid.Column="3" VerticalAlignment="Top" Margin="0 50 0 0">
+                <Ellipse.Fill>
+                    <ImageBrush x:Name="avatarImg"/>
+                </Ellipse.Fill>
+            </Ellipse>
+            <Button x:Name="changeAvatarBtn" Content="Change avatar" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Margin="50 50 50 0" Click="changeAvatarBtn_Click"/>
+            <Button x:Name="removeAvatarBtn" Content="Remove avatar" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Margin="50 50 50 0" Click="removeAvatarBtn_Click"/>
+        </StackPanel>
 
-        <Grid Grid.Column="2" Margin="0,334,0,304" Grid.ColumnSpan="2">
+        <ListView x:Name="tasksLB" FontSize="15" Grid.Column="1" VerticalAlignment="Top" Height="200" Visibility="Hidden" Width="auto" Style="{DynamicResource LBTemplate}" Grid.ColumnSpan="3" Margin="0 30 130 0"/>
+
+        <Grid Grid.Column="1" Margin="0,334,0,304" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="addTaskBtn" Content="Add" Margin="0 0 50 0" Grid.Column="0" Visibility="Hidden" Click="addTaskBtn_Click" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
-            <Button x:Name="removeTaskBtn" Content="Remove" Grid.Column="1" Visibility="Hidden" Click="removeTaskBtn_Click" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
+            <Button x:Name="addTaskBtn" Content="Add" Margin="0 0 180 0" Grid.Column="0" Visibility="Hidden" Click="addTaskBtn_Click" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
+            <Button x:Name="removeTaskBtn" Content="Remove" Margin="0 0 130 0" Grid.Column="1" Visibility="Hidden" Click="removeTaskBtn_Click" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
         </Grid>
 
 
-        <Grid Grid.Column="2" Margin="0,540,0,99" Grid.ColumnSpan="2">
+        <Grid Grid.Column="1" Margin="0,540,0,99" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*"/>
                 <ColumnDefinition Width="0.5*"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="changeTaskBtn" Content="Change" Grid.Column="0" Margin="0 0 50 0" Visibility="Hidden" Click="changeTaskBtn_Click" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
-            <Button x:Name="completedTaskBtn" Content="Completed" Grid.Column="1" Visibility="Hidden" Click="completedTaskBtn_Click" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
+            <Button x:Name="changeTaskBtn" Content="Change" Grid.Column="0" Margin="0 0 180 0" Visibility="Hidden" Click="changeTaskBtn_Click" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
+            <Button x:Name="completedTaskBtn" Content="Completed" Grid.Column="1" Margin="0 0 130 0" Visibility="Hidden" Click="completedTaskBtn_Click" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
         </Grid>
 
 
 
-        <Grid x:Name="settingsGrid" Visibility="Hidden" Grid.Column="2" Grid.ColumnSpan="2">
+        <Grid x:Name="settingsGrid" Visibility="Hidden" Grid.Column="1" Grid.ColumnSpan="3">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.5*"/>
@@ -171,33 +188,38 @@
                 <RowDefinition Height="0.1*"/>
             </Grid.RowDefinitions>
 
-            <ListView x:Name="peopleLB" Grid.Row="0" Visibility="Visible" Style="{DynamicResource LBTemplate}"/>
+            <ListView VerticalAlignment="Top" x:Name="peopleLB" Height="250" Margin="0 50 50 0" Grid.Row="0" Visibility="Visible" Style="{DynamicResource LBTemplate}"/>
+            <Label Content="Password" Style="{StaticResource LabelStyle}" Margin="0 300 50 0"/>
+            <PasswordBox x:Name="passBox" Height="25" Margin="0 330 50 0" Style="{DynamicResource PassBoxTemplate}"></PasswordBox>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.3*"/>
                     <ColumnDefinition Width="0.3*"/>
                 </Grid.ColumnDefinitions>
-                <Button x:Name="changeUserBtn" Content="Select user" Grid.Column="0" Margin="0 0 20 0" Click="changeUserBtn_Click" Visibility="Visible" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
-                <Button x:Name="removeUserBtn" Content="Remove user" Grid.Column="1" Margin="0 0 20 0" Click="removeUserBtn_Click" Visibility="Visible" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
-                <Button x:Name="addUserBtn" Content="Add user" Grid.Column="2" Visibility="Visible" Click="addUserBtn_Click" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
+                <Button x:Name="changeUserBtn" Content="Select user" Grid.Column="0" Margin="0 20 20 0" Click="changeUserBtn_Click" Visibility="Visible" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
+                <Button x:Name="removeUserBtn" Content="Remove user" Grid.Column="1" Margin="0 20 20 0" Click="removeUserBtn_Click" Visibility="Visible" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
+                <Button x:Name="addUserBtn" Content="Add user" Grid.Column="2" Margin="0 20 50 0" Visibility="Visible" Click="addUserBtn_Click" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
             </Grid>
 
 
-            <Label x:Name="changeThemeLabel" Grid.Row="2" Content="Theme" Style="{DynamicResource LabelStyle}" Visibility="Visible"/>
-            <ComboBox x:Name="changeTheme" Grid.Row="3" Visibility="Visible" Style="{DynamicResource CBStyle}"/>
-            <Button x:Name="changeThemeBtn" Grid.Row="4" Margin="0 10 0 0" Content="Change" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Visibility="Visible" Click="changeThemeBtn_Click"/>
+            <Label x:Name="changeThemeLabel" Grid.Row="2" VerticalAlignment="Bottom" Content="Theme" Style="{DynamicResource LabelStyle}" Visibility="Visible"/>
+            <ComboBox x:Name="changeTheme" Grid.Row="3" Visibility="Visible" Style="{DynamicResource CBStyle}" Margin="0 0 50 0"/>
+            <Button x:Name="changeThemeBtn" Grid.Row="4" Margin="0 20 50 20" Content="Change" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Visibility="Visible" Click="changeThemeBtn_Click"/>
         </Grid>
 
 
         <Label x:Name="leveLabel_1" Content="Level: " FontSize="30" Grid.Column="1" Visibility="Hidden" Style="{DynamicResource LabelStyle}"/>
         <Label x:Name="levelLabel_2" FontSize="30" Grid.Column="2" Visibility="Hidden" Style="{DynamicResource LabelStyle}" Grid.ColumnSpan="2"/>
-        <ProgressBar x:Name="levelPB" Grid.Column="2" Margin="0,134,0,495" Visibility="Hidden" ValueChanged="levelPB_ValueChanged" Grid.ColumnSpan="2" Style="{DynamicResource ProgressBarStyle}"/>
-        <Label x:Name="countOfComplitedTasksLabel_1" Content="Count of completed tasks: " FontSize="20" Grid.Column="1" Grid.ColumnSpan="3" Height="40" Visibility="Hidden" Style="{DynamicResource LabelStyle}" Margin="0,190,0,189"/>
-        <Label x:Name="countOfComplitedTasksLabel_2" Grid.Column="2" FontSize="20" Height="40" Margin="149,190,-149,189" Visibility="Hidden" Style="{DynamicResource LabelStyle}" Grid.ColumnSpan="2"/>
+        <Label x:Name="countOfComplitedTasksLabel_1" Content="Count of completed tasks: " Grid.Column="1" Grid.ColumnSpan="3" Visibility="Hidden" Style="{DynamicResource LabelStyle}" Margin="0,190,0,189"/>
+        <Label x:Name="countOfComplitedTasksLabel_2" Grid.Column="2" Margin="149,190,-149,189" Visibility="Hidden" Style="{DynamicResource LabelStyle}" Grid.ColumnSpan="2"/>
+
+        <Label x:Name="Xplabel" Content="XP: " Grid.Column="1" Grid.ColumnSpan="3" Visibility="Hidden" Style="{DynamicResource LabelStyle}" Margin="0,100,0,189"/>
+        <Label x:Name="xpCount" Grid.Column="2" Margin="149,100,-149,189" Visibility="Hidden" Style="{DynamicResource LabelStyle}" Grid.ColumnSpan="2"/>
+        <ProgressBar x:Name="levelPB" Grid.Column="1" Margin="0,422,100,52" Visibility="Hidden" Height="50" ValueChanged="levelPB_ValueChanged" Grid.ColumnSpan="3" Style="{DynamicResource ProgressBarStyle}"/>
 
 
-        <Grid x:Name="motivationGrid" Grid.Column="2" Visibility="Hidden" Grid.ColumnSpan="2">
+        <Grid x:Name="motivationGrid" Grid.Column="1" Visibility="Hidden" Grid.ColumnSpan="3">
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.7*"/>
                 <RowDefinition Height="0.3*"/>
@@ -207,19 +229,19 @@
                 <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="0.3*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.ColumnSpan="3" Grid.Row="0" x:Name="motivationDG" Style="{DynamicResource DataGridStyle}"/>
-            <Button x:Name="updateDataBtn" Content="Update" Grid.Column="0" Grid.Row="1" Margin="0 0 20 0" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="updateDataBtn_Click" />
-            <Button x:Name="removeDataBtn" Content="Remove" Grid.Column="1" Grid.Row="1" Margin="0 0 20 0" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="removeDataBtn_Click" />
-            <Button x:Name="addDataBtn"  Content="Add" Grid.Column="2" Grid.Row="1" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="addDataBtn_Click" />
+            <DataGrid Grid.ColumnSpan="3" Grid.Row="0" Margin="0 30 100 0" x:Name="motivationDG" Style="{DynamicResource DataGridStyle}"/>
+            <Button x:Name="updateDataBtn" Content="Update" Grid.Column="0" Grid.Row="1" Margin="0 20 50 50" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="updateDataBtn_Click" />
+            <Button x:Name="removeDataBtn" Content="Remove" Grid.Column="1" Grid.Row="1" Margin="0 20 50 50" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="removeDataBtn_Click" />
+            <Button x:Name="addDataBtn"  Content="Add" Grid.Column="2" Grid.Row="1" Margin="0 20 100 50" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="addDataBtn_Click" />
         </Grid>
 
 
 
         <StackPanel Grid.Column="1">
             <Label x:Name="salaryLabel" Content="Salary: " Style="{DynamicResource LabelStyle}" Visibility="Hidden"/>
-            <Label x:Name="foodCostLabel" Content="Food costs: " Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
-            <Label x:Name="utilitiesCostLabel" Content="Utitities costs: " Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
-            <Label x:Name="personalCostLabel" Content="Personal costs" Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
+            <Label x:Name="foodCostLabel" Margin="0 15 0 0" Content="Food costs: " Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
+            <Label x:Name="utilitiesCostLabel" Margin="0 15 0 0" Content="Utitities costs: " Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
+            <Label x:Name="personalCostLabel" Margin="0 15 0 15" Content="Personal costs" Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
 
             <Label x:Name="foodPercentCostLabel" Content="Food costs: " Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
             <Label x:Name="utilitiesPercentCostLabel" Content="Utitities costs: " Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
@@ -229,10 +251,10 @@
         </StackPanel>
 
         <StackPanel x:Name="graphicSP" Grid.Column="2" Margin="0,0,105,0">
-            <TextBox x:Name="salaryTB" Margin="0 10 0 0" Height="25" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
-            <TextBox x:Name="foodCostTB" Margin="0 20 0 0" Height="25" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
-            <TextBox x:Name="utilitiesCostTB" Margin="0 20 0 0" Height="25" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
-            <TextBox x:Name="personalCostTB" Margin="0 15 0 0" Height="25" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
+            <TextBox x:Name="salaryTB" Margin="0 10 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
+            <TextBox x:Name="foodCostTB" Margin="0 20 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
+            <TextBox x:Name="utilitiesCostTB" Margin="0 20 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
+            <TextBox x:Name="personalCostTB" Margin="0 15 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
 
             <Label x:Name="foodPercentCostLabel_2" Margin="0 10 0 0" Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
             <Label x:Name="utilitiesPercentCostLabel_2" Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
@@ -241,8 +263,8 @@
         </StackPanel>
 
         <Grid x:Name="chartGrid" Grid.Column="3" Visibility="Hidden">
-            <DVC:Chart x:Name="mcChart" Background="LightSteelBlue">
-                <DVC:PieSeries Title="Experience" IndependentValueBinding="{Binding Key}" DependentValueBinding="{Binding Value}"/>
+            <DVC:Chart x:Name="mcChart" Background="LightSteelBlue" Margin="0 50 50 50">
+                <DVC:PieSeries Title="Experience" IndependentValueBinding="{Binding Key}" DependentValueBinding="{Binding Value}" />
             </DVC:Chart>
         </Grid>
 
@@ -252,7 +274,7 @@
                 <RowDefinition Height="0.3*"/>
             </Grid.RowDefinitions>
 
-            <ListBox x:Name="contactLB" Style="{DynamicResource LBTemplate}" Grid.Row="0"/>
+            <ListBox x:Name="contactLB" Margin="0 50 50 0" Style="{DynamicResource LBTemplate}" Grid.Row="0"/>
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.3*"/>
@@ -262,14 +284,15 @@
 
                 <Button x:Name="addContactBtn" Content="Add" Grid.Column="0" Margin="0 50 50 50" Template="{DynamicResource ButtonTemplate}" Style="{DynamicResource ButtonStyle}" Click="addContactBtn_Click"/>
                 <Button x:Name="removeContactBtn" Content="Remove" Grid.Column="1" Margin="0 50 50 50" Template="{DynamicResource ButtonTemplate}" Style="{DynamicResource ButtonStyle}" Click="removeContactBtn_Click"/>
-                <Button x:Name="updateContactBtn" Content="Update" Grid.Column="2" Margin="0 50 0 50" Template="{DynamicResource ButtonTemplate}" Style="{DynamicResource ButtonStyle}" Click="updateContactBtn_Click"/>
+                <Button x:Name="updateContactBtn" Content="Update" Grid.Column="2" Margin="0 50 50 50" Template="{DynamicResource ButtonTemplate}" Style="{DynamicResource ButtonStyle}" Click="updateContactBtn_Click"/>
             </Grid>
         </Grid>
 
         <Grid x:Name="notesGrid" Visibility="Hidden" Grid.Column="1" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="0.7*"/>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="1">
                 <Grid.RowDefinitions>
@@ -277,11 +300,21 @@
                     <RowDefinition Height="0.5*"/>
                     <RowDefinition Height="0.4*"/>
                 </Grid.RowDefinitions>
-                <TextBox x:Name="nameNoteTB" Grid.Row="0" Style="{DynamicResource TBStyle}"/>
-                <TextBox x:Name="noteTB" Grid.Row="1" Style="{DynamicResource TBStyle}"/>
-                <ListBox x:Name="notesLB" Grid.Row="2" Style="{DynamicResource LBTemplate}"/>
+                <Label Content="Title: " HorizontalAlignment="Right" Grid.Row="0" Style="{DynamicResource LabelStyle}"/>
+                <Label Content="Content: " HorizontalAlignment="Right" Grid.Row="1" Style="{DynamicResource LabelStyle}"/>
+                <Label Content="All notes: " HorizontalAlignment="Right" Grid.Row="2" Style="{DynamicResource LabelStyle}"/>
             </Grid>
-            <Grid>
+            <Grid Grid.Column="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="0.1*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.4*"/>
+                </Grid.RowDefinitions>
+                <TextBox x:Name="nameNoteTB" Grid.Row="0" Margin="0 20 20 0" Style="{DynamicResource TBStyle}"/>
+                <TextBox x:Name="noteTB" Grid.Row="1" Margin="0 20 20 0" Height="300" Style="{DynamicResource TBStyle}"/>
+                <ListBox x:Name="notesLB" Grid.Row="2" Margin="0 20 20 20"    Style="{DynamicResource LBTemplate}"/>
+            </Grid>
+            <Grid Grid.Column="0">
                 <Grid.RowDefinitions>
                     <RowDefinition/>
                     <RowDefinition/>
@@ -290,18 +323,19 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <Button x:Name="addNoteBtn" Content="Add note" Grid.Row="0" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="addNoteBtn_Click"/>
-                <Button x:Name="removeNoteBtn" Content="Remove note" Grid.Row="1" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="removeNoteBtn_Click"/>
-                <Button x:Name="changeNoteBtn" Content="Change note" Grid.Row="2" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="changeNoteBtn_Click"/>
-                <Button x:Name="saveNoteBtn" Content="Save" Grid.Row="3" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="saveNoteBtn_Click"/>
-                <Button x:Name="loadNoteBtn" Content="Load" Grid.Row="5" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="loadNoteBtn_Click"/>
+                <Button x:Name="addNoteBtn" Content="Add note" Margin="0 30 0 0" Grid.Row="0" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="addNoteBtn_Click"/>
+                <Button x:Name="removeNoteBtn" Content="Remove note" Margin="0 30 0 0" Grid.Row="1" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="removeNoteBtn_Click"/>
+                <Button x:Name="changeNoteBtn" Content="Change note" Margin="0 30 0 0" Grid.Row="2" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="changeNoteBtn_Click"/>
+                <Button x:Name="saveNoteBtn" Content="Save" Margin="0 30 0 0" Grid.Row="3" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="saveNoteBtn_Click"/>
+                <Button x:Name="loadNoteBtn" Content="Load" Margin="0 20 0 10" Grid.Row="5" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="loadNoteBtn_Click"/>
             </Grid>
         </Grid>
 
         <Grid Grid.Column="1" Grid.ColumnSpan="3" Visibility="Hidden" x:Name="moneyExchangeGrid">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.3*"/>
-                <ColumnDefinition Width="0.7*"/>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="0.4*"/>
             </Grid.ColumnDefinitions>
 
             <Grid.RowDefinitions>
@@ -310,13 +344,14 @@
                 <RowDefinition Height="0.05*"/>
                 <RowDefinition Height="0.01*"/>
             </Grid.RowDefinitions>
-
-            <TextBox x:Name="valueOneTB" Margin="0 0 0 10" Grid.Row="0" Grid.Column="0" Style="{DynamicResource TBStyle}"/>
-            <ComboBox Name="valueOneCB" Margin="0 0 0 10" Grid.Row="0" Grid.Column="1" Style="{DynamicResource CBStyle}"/>
-            <ComboBox Name="valueTwoCB" Grid.Column="1" Grid.Row="1" Style="{DynamicResource CBStyle}"/>
-            <Button x:Name="calculateMoneyBtn" Content="Calculate" Grid.Column="0" Grid.Row="2" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="calculateMoneyBtn_Click"></Button>
-            <Label Content="Result" Grid.Row="3" Grid.Column="0" Style="{DynamicResource LabelStyle}"/>
-            <Label x:Name="resultExchangeLabel" Grid.Row="3" Grid.Column="1" Style="{DynamicResource LabelStyle}"/>
+            <Label VerticalAlignment="Center" Content="Initial currency" Style="{DynamicResource LabelStyle}" Grid.Column="0" Grid.Row="0"/>
+            <Label VerticalAlignment="Center" Content="Translated currency" Style="{DynamicResource LabelStyle}" Grid.Column="0" Grid.Row="1"/>
+            <TextBox x:Name="valueOneTB" Margin="0 20 20 20" Grid.Row="0" Grid.Column="1" Style="{DynamicResource TBStyle}"/>
+            <ComboBox Name="valueOneCB" Margin="0 20 100 0" Grid.Row="0" Grid.Column="2" Style="{DynamicResource CBStyle}"/>
+            <ComboBox Name="valueTwoCB" Grid.Column="2" Margin="0 20 100 0" Grid.Row="1" Style="{DynamicResource CBStyle}"/>
+            <Button x:Name="calculateMoneyBtn" Content="Calculate" Grid.Column="1" Margin="0 20 20 20" Grid.Row="2" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="calculateMoneyBtn_Click"></Button>
+            <Label Content="Result" Grid.Row="3" Grid.Column="1" Style="{DynamicResource LabelStyle}"/>
+            <Label x:Name="resultExchangeLabel" Grid.Row="3" Grid.Column="2" Style="{DynamicResource LabelStyle}"/>
         </Grid>
 
         <Grid x:Name="weatherGrid" Visibility="Hidden" Grid.Column="1" Grid.ColumnSpan="3">

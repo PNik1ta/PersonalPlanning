@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskList.Views"
         mc:Ignorable="d"
-        Title="changeContact" Height="450" Width="800" Closing="Window_Closing">
+        Title="changeContact" Height="450" Width="800" Closing="Window_Closing" MaxHeight="450" MaxWidth="800" MinHeight="250" MinWidth="600">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -22,16 +22,16 @@
             <ColumnDefinition Width="0.7*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Column="0">
-            <Label Content="Name" Style="{DynamicResource LabelStyle}"/>
-            <Label Content="Surname" Style="{DynamicResource LabelStyle}"/>
-            <Label Content="Phone number" Style="{DynamicResource LabelStyle}"/>
+            <Label Content="Name" Margin="0 10 0 0" Style="{DynamicResource LabelStyle}"/>
+            <Label Content="Surname" Margin="0 10 0 0" Style="{DynamicResource LabelStyle}"/>
+            <Label Content="Phone number" Margin="0 10 0 0" Style="{DynamicResource LabelStyle}"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <TextBox x:Name="nameTB" Height="25" Margin="0 15 0 0" Style="{DynamicResource TBStyle}"/>
-            <TextBox x:Name="surnameTB" Height="25" Margin="0 15 0 0" Style="{DynamicResource TBStyle}"/>
-            <TextBox x:Name="numberTB" Height="25" Margin="0 15 0 0" Style="{DynamicResource TBStyle}"/>
-            <Button x:Name="changeBtn" Content="Change" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Height="50"></Button>
+            <TextBox x:Name="nameTB"  Margin="0 15 15 0" Style="{DynamicResource TBStyle}"/>
+            <TextBox x:Name="surnameTB" Margin="0 15 15 0" Style="{DynamicResource TBStyle}"/>
+            <TextBox x:Name="numberTB"  Margin="0 15 15 0" Style="{DynamicResource TBStyle}"/>
+            <Button x:Name="changeBtn" Content="Change" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Height="50" Margin="0 20 15 0"></Button>
         </StackPanel>
     </Grid>
 </Window>

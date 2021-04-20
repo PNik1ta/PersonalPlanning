@@ -56,6 +56,12 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>toDoImg.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Carbon.Data.Protection, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Carbon.Data.Protection.1.4.1\lib\netstandard2.0\Carbon.Data.Protection.dll</HintPath>
@@ -212,6 +218,9 @@
     <Compile Include="Views\ChangeTaskWindow.xaml.cs">
       <DependentUpon>ChangeTaskWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\DialogWindow.xaml.cs">
+      <DependentUpon>DialogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
     </Compile>
@@ -275,6 +284,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dark.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\DialogWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -342,6 +355,18 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\sunnyWeatherImg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\taskbarIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\toDoImg.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="toDoImg.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\helpImg.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

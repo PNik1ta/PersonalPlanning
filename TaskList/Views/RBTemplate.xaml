@@ -3,6 +3,7 @@
                     xmlns:local="clr-namespace:TaskList.Views">
     <SolidColorBrush x:Key="NotActiveRectangleColor" Color="#006911"/>
     <SolidColorBrush x:Key="ActiveRectangleColor" Color="#00f027"/>
+    <SolidColorBrush x:Key="DisableRectangleColor" Color="DarkRed"/>
     <SolidColorBrush x:Key="ActiveEllipseColor" Color="#e8b200"/>
 
     <ControlTemplate TargetType="CheckBox" x:Key="CheckBoxTemplate">
@@ -13,7 +14,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0" Margin="5">
-                <Rectangle Name="rectangle" Height="15" Margin="5" RadiusX="5" RadiusY="10" Fill="{StaticResource NotActiveRectangleColor}" Stroke="#FF814B78" />
+                <Rectangle Name="rectangle" Height="15" Margin="5" RadiusX="5" RadiusY="10" Fill="{StaticResource DisableRectangleColor}" Stroke="#FF814B78" />
                 <Ellipse Name ="ellipse" Fill="White" Height="25" Width="25" HorizontalAlignment="Left">
                     <Ellipse.Effect>
                         <DropShadowEffect Color="Gray" ShadowDepth="2"/>
@@ -28,6 +29,12 @@
                 <BeginStoryboard>
                     <Storyboard>
                         <ThicknessAnimation BeginTime="0:0:0" Duration="0:0:0.5" To="35, 0, 0, 0" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Margin"/>
+                        <ColorAnimation
+                            To="Green"
+                            Storyboard.TargetName="rectangle"
+                            Storyboard.TargetProperty="Fill.Color" 
+                            FillBehavior="HoldEnd"
+                            Duration="0:0:0.5"/>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>
@@ -36,6 +43,12 @@
                 <BeginStoryboard>
                     <Storyboard>
                         <ThicknessAnimation BeginTime="0:0:0" Duration="0:0:0.5" To="0,0,0,0" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Margin"/>
+                        <ColorAnimation
+                            To="OrangeRed"
+                            Storyboard.TargetName="rectangle"
+                            Storyboard.TargetProperty="Fill.Color" 
+                            FillBehavior="HoldEnd"
+                            Duration="0:0:0.5"/>
                     </Storyboard>
                 </BeginStoryboard>
             </EventTrigger>

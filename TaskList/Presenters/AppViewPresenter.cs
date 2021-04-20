@@ -424,5 +424,35 @@ namespace TaskList.Presenters
         {
             view.ShowWeather();
         }
+
+        internal void ChangeAvatar()
+        {
+            view.ChangeAvatar();
+        }
+
+        internal void RemoveAvatar()
+        {
+            view.RemoveAvatar();
+        }
+
+        internal void RestartApp()
+        {
+            view.RestartApp();
+        }
+
+        internal void AddUserInPassWindow()
+        {
+            view.AddUserInPassWindow();
+        }
+
+        internal void AddUserInPassWindow_Click()
+        {
+            view.AddUserInPassWindow_Click();
+        }
+
+        internal void ShowManual()
+        {
+            view.ShowManual();
+        }
     }
 }

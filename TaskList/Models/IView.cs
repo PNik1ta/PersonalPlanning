@@ -59,6 +59,12 @@ namespace TaskList.Models
         void ShowCurrencies();
         void CalculateCurrency();
         void ShowWeather();
+        void ChangeAvatar();
+        void RemoveAvatar();
+        void RestartApp();
+        void AddUserInPassWindow();
+        void AddUserInPassWindow_Click();
+        void ShowManual();
         WeatherStates CalculateWeatherState(Weather weather);
     }
 }

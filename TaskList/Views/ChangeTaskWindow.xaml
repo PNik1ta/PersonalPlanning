@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskList.Views"
         mc:Ignorable="d"
-        Title="ChangeTaskWindow" Height="356.558" Width="647.541" Closing="Window_Closing">
+        Title="ChangeTaskWindow" Height="356.558" Width="647.541" Closing="Window_Closing" MaxHeight="400" MaxWidth="700" MinHeight="330" MinWidth="500">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -23,18 +23,18 @@
         </Grid.ColumnDefinitions>
 
         <StackPanel Grid.Column="0">
-            <Label Content="Title" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
-            <Label Content="Date" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
+            <Label Content="Title" Margin="0 10 0 0" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
+            <Label Content="Date" Margin="0 10 0 0" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
             <Label Content="Level" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
             <Label Content="Comment" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <TextBox x:Name="titleTB" Margin="0 10" Height="25" Style="{StaticResource TBStyle}"></TextBox>
-            <DatePicker x:Name="dateDP" Margin="0 10" Height="25"></DatePicker>
-            <ComboBox x:Name="levelCB" Margin="0 10" Height="25"></ComboBox>
-            <TextBox x:Name="commentTB" Margin="0 10" Height="100" Style="{StaticResource TBStyle}"></TextBox>
-            <Button x:Name="changeBtn" Content="Change" Width="150" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"></Button>
+            <TextBox x:Name="titleTB" Margin="0 10 15 0" Style="{StaticResource TBStyle}"></TextBox>
+            <DatePicker x:Name="dateDP" Margin="0 10 15 0" Height="25"></DatePicker>
+            <ComboBox x:Name="levelCB" Margin="0 10 15 0" Height="25"></ComboBox>
+            <TextBox x:Name="commentTB" Margin="0 10 15 0" Height="100" Style="{StaticResource TBStyle}"></TextBox>
+            <Button x:Name="changeBtn" Content="Change" Width="150" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Margin="0 10 15 0"></Button>
         </StackPanel>
     </Grid>
 </Window>

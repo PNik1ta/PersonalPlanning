@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TaskList.Views"
         mc:Ignorable="d"
-        Title="AddUserWindow" Height="297.036" Width="800" Closing="Window_Closing">
+        Title="AddUserWindow" Height="350" Width="800" Closing="Window_Closing" MaxHeight="400" MaxWidth="800" MinHeight="300" MinWidth="500">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -28,17 +28,17 @@
                     <GradientStop Color="#FFBFFBFB" Offset="1"/>
                 </LinearGradientBrush>
             </StackPanel.Background>
-            <Label Content="Name" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
-            <Label Content="Surname" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
-            <Label Content="Age" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
-            <Label Content="Password" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
+            <Label Content="Name" Margin="0 10 0 0" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
+            <Label Content="Surname" Margin="0 10 0 0" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
+            <Label Content="Age" Margin="0 10 0 0" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
+            <Label Content="Password" Margin="0 10 0 0" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <TextBox x:Name="nameTB" Margin="0 10" Height="25" Style="{StaticResource TBStyle}"></TextBox>
-            <TextBox x:Name="surnameTB" Margin="0 10" Height="25" Style="{StaticResource TBStyle}"></TextBox>
-            <TextBox x:Name="ageTB" Margin="0 10" Height="25" Style="{StaticResource TBStyle}"></TextBox>
-            <TextBox x:Name="passTB" Margin="0 10" Height="25" Style="{StaticResource TBStyle}"></TextBox>
+            <TextBox x:Name="nameTB" Margin="0 10 15 10"  Style="{StaticResource TBStyle}"></TextBox>
+            <TextBox x:Name="surnameTB" Margin="0 10 15 10"  Style="{StaticResource TBStyle}"></TextBox>
+            <TextBox x:Name="ageTB" Margin="0 10 15 10"  Style="{StaticResource TBStyle}"></TextBox>
+            <TextBox x:Name="passTB" Margin="0 10 15 10"  Style="{StaticResource TBStyle}"></TextBox>
             <Button x:Name="addBtn" Content="Add" Width="150" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"></Button>
         </StackPanel>
     </Grid>

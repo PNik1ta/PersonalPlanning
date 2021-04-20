@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Printing;
 using System.Globalization;
@@ -67,19 +68,25 @@ namespace TaskList.Views
             MyTaskbarIcon.ToolTipText = "Task List";
             MyTaskbarIcon.MenuActivation = PopupActivationMode.LeftOrRightClick;
             MyTaskbarIcon.PopupActivation = PopupActivationMode.DoubleClick;
-            MyTaskbarIcon.Icon = System.Drawing.Icon.ExtractAssociatedIcon("C:/Users/denis/OneDrive/Рабочий стол/PersonPlanning/TaskList/Images/listImg.png");
+            MyTaskbarIcon.Icon = new System.Drawing.Icon(@"..\..\..\Images\toDoImg.ico");
             MyTaskbarIcon.TrayLeftMouseUp += iconOnClick;
             Popup pu = new Popup();
             pu.Child = MyTaskbarIcon;
 
             WebClient webClient = new WebClient();
-            string url = "https://api.exchangeratesapi.io/latest";
+            string url = "http://api.exchangeratesapi.io/v1/latest?access_key=e24c1bfa1ed12df197d85e097991732f";
             var json = webClient.DownloadString(url);
             currencies = JsonConvert.DeserializeObject<Currency>(json);
 
             passwordWindow.enterBtn.Click += CheckPass;
             passwordWindow.Closing += PassWindowClosing;
+            passwordWindow.AddUserBtn.Click += addUserInPassWindow;
             passwordWindow.ShowDialog();
+
+
+            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string path = (System.IO.Path.GetDirectoryName(executable));
+            AppDomain.CurrentDomain.SetData("DataDirectory", path);
 
             connectionString = ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
 
@@ -103,7 +110,10 @@ namespace TaskList.Views
             timer.Tick += Notify;
             timer.Start();
 
-            passwordWindow.enterBtn.Click += CheckPass;
+            avatarImg.ImageSource = new BitmapImage(new Uri(person.Avatar, UriKind.RelativeOrAbsolute)); ;
+
+            passwordWindow.AddUserBtn.Click += addUserBtn_Click;
+
             addTaskWindow.addBtn.Click += addBtn_Click;
             addUserWindow.addBtn.Click += addUser_Click;
             phraseWindow.addPhraseBtn.Click += addData;
@@ -117,7 +127,11 @@ namespace TaskList.Views
             changeTaskWindow.levelCB.Items.Add("Important");
             changeTheme.Items.Add("Light");
             changeTheme.Items.Add("Dark");
+
+
         }
+
+
 
         private void iconOnClick(object sender, RoutedEventArgs e)
         {
@@ -167,6 +181,7 @@ namespace TaskList.Views
         private void changeUserBtn_Click(object sender, RoutedEventArgs e)
         {
             presenter.ChangeUser();
+            presenter.RestartApp();
         }
 
         private void printPersonInfo()
@@ -388,7 +403,9 @@ namespace TaskList.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                dialogWindow dialog = new dialogWindow();
+                dialog.dialogMessage.Text = connectionString;
+                dialog.ShowDialog();
             }
             finally
             {
@@ -457,6 +474,11 @@ namespace TaskList.Views
             moneyExchangeGrid.Visibility = Visibility.Hidden;
 
             weatherGrid.Visibility = Visibility.Hidden;
+
+            xpCount.Visibility = Visibility.Hidden;
+            Xplabel.Visibility = Visibility.Hidden;
+
+            personAvatarSP.Visibility = Visibility.Hidden;
         }
 
         public void UpdateTasks()
@@ -511,7 +533,9 @@ namespace TaskList.Views
 
             if (!isAdd)
             {
-                MessageBox.Show("You can't add tasks with the same title");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "You can't add music with the same title";
+                window.ShowDialog();
             }
             else
             {
@@ -553,7 +577,9 @@ namespace TaskList.Views
         {
             if (peopleLB.SelectedItem == null)
             {
-                MessageBox.Show("You don't choose user");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "You don't choose the user";
+                window.ShowDialog();
             }
             else
             {
@@ -576,16 +602,28 @@ namespace TaskList.Views
         {
             if (peopleLB.SelectedItem == null)
             {
-                MessageBox.Show("You don't choose the user");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "You don't choose the user";
+                window.ShowDialog();
             }
             else
             {
+
                 People people = new People();
                 for (int i = 0; i < people.people.Count; i++)
                 {
                     if (peopleLB.SelectedItem.ToString() == people.people[i].Name)
                     {
-                        presenter.RemoveUser(i);
+                        if (passBox.Password == people.people[i].Password)
+                        {
+                            presenter.RemoveUser(i);
+                        }
+                        else
+                        {
+                            dialogWindow window = new dialogWindow();
+                            window.dialogMessage.Text = "User password is incorrect. You must enter user's password you want to delete";
+                            window.ShowDialog();
+                        }
                     }
                 }
             }
@@ -597,7 +635,9 @@ namespace TaskList.Views
         {
             if (tasksLB.SelectedItem == null)
             {
-                MessageBox.Show("You don't choose the task");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "You don't choose the task";
+                window.ShowDialog();
             }
             else
             {
@@ -623,37 +663,54 @@ namespace TaskList.Views
             {
                 if (addUserWindow.nameTB.Text == p.Name)
                 {
-                    MessageBox.Show("You can't add users with same name");
+                    dialogWindow window = new dialogWindow();
+                    window.dialogMessage.Text = "You can't add users with the same name";
+                    window.ShowDialog();
                     isAdd = false;
                     break;
                 }
             }
 
-            if (addUserWindow.nameTB.Text == string.Empty)
+            if (String.IsNullOrWhiteSpace(addUserWindow.nameTB.Text))
             {
                 isAdd = false;
-                MessageBox.Show("Name field is empty");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Name field is empty";
+                window.ShowDialog();
             }
 
-            else if (addUserWindow.surnameTB.Text == string.Empty)
+            else if (String.IsNullOrWhiteSpace(addUserWindow.surnameTB.Text))
             {
                 isAdd = false;
-                MessageBox.Show("Surname field is empty");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Surname field is empty";
+                window.ShowDialog();
             }
 
-            else if (addUserWindow.ageTB.Text == string.Empty)
+            else if (String.IsNullOrWhiteSpace(addUserWindow.ageTB.Text))
             {
                 isAdd = false;
-                MessageBox.Show("Age field is empty");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Age field is empty";
+                window.ShowDialog();
             }
 
+            else if (String.IsNullOrWhiteSpace(addUserWindow.passTB.Text))
+            {
+                isAdd = false;
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Pass field is empty";
+                window.ShowDialog();
+            }
 
             if (isAdd)
             {
                 int age;
                 if (!int.TryParse(addUserWindow.ageTB.Text, out age))
                 {
-                    MessageBox.Show("Age is not a number");
+                    dialogWindow window = new dialogWindow();
+                    window.dialogMessage.Text = "Age is not a number";
+                    window.ShowDialog();
                     age = 0;
                 }
                 else
@@ -669,7 +726,9 @@ namespace TaskList.Views
         {
             if (tasksLB.SelectedItem == null)
             {
-                MessageBox.Show("You don't choose the task");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "You don't choose the task";
+                window.ShowDialog();
             }
             else
             {
@@ -744,7 +803,9 @@ namespace TaskList.Views
         {
             if (tasksLB.SelectedItem == null)
             {
-                MessageBox.Show("You don't choose the task");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "You don't choose the task";
+                window.ShowDialog();
             }
             else
             {
@@ -776,7 +837,9 @@ namespace TaskList.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = ex.Message;
+                window.ShowDialog();
             }
             finally
             {
@@ -797,7 +860,9 @@ namespace TaskList.Views
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = ex.Message;
+                window.ShowDialog();
             }
             finally
             {
@@ -815,7 +880,9 @@ namespace TaskList.Views
             if (salaryTB.Text == string.Empty || foodCostTB.Text == string.Empty
                || utilitiesCostTB.Text == string.Empty || personalCostTB.Text == string.Empty)
             {
-                MessageBox.Show("This fiels can't be empty");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "This fiels can't be empty";
+                window.ShowDialog();
             }
             else
             {
@@ -833,27 +900,37 @@ namespace TaskList.Views
 
                 if (foodCost > salary)
                 {
-                    MessageBox.Show("Food costs can't be more than salary");
+                    dialogWindow window = new dialogWindow();
+                    window.dialogMessage.Text = "Food costs can't be more than salary";
+                    window.ShowDialog();
                 }
 
                 else if (utilityCost > salary)
                 {
-                    MessageBox.Show("Utility cost can't be more than salary");
+                    dialogWindow window = new dialogWindow();
+                    window.dialogMessage.Text = "Utility cost can't be more than salary";
+                    window.ShowDialog();
                 }
 
                 else if (personalCost > salary)
                 {
-                    MessageBox.Show("Personal costs can't be more than salary");
+                    dialogWindow window = new dialogWindow();
+                    window.dialogMessage.Text = "Personal costs can't be more than salary";
+                    window.ShowDialog();
                 }
 
                 else if (foodCost < 0 || utilityCost < 0 || personalCost < 0)
                 {
-                    MessageBox.Show("cost can't be less than 0");
+                    dialogWindow window = new dialogWindow();
+                    window.dialogMessage.Text = "Cost can't be less than 0";
+                    window.ShowDialog();
                 }
 
-                else if(salary<(foodCost+utilityCost+personalCost))
+                else if (salary < (foodCost + utilityCost + personalCost))
                 {
-                    MessageBox.Show("Your salary is less tha your costs");
+                    dialogWindow window = new dialogWindow();
+                    window.dialogMessage.Text = "Your salary is less tha your costs";
+                    window.ShowDialog();
                 }
 
                 else
@@ -891,7 +968,9 @@ namespace TaskList.Views
                         DateTime.Now.Minute == toDo.Date.Value.Minute &&
                         DateTime.Now.Second == toDo.Date.Value.Second)
                     {
-                        MessageBox.Show(toDo.Comment, toDo.Name);
+                        dialogWindow window = new dialogWindow();
+                        window.dialogMessage.Text = toDo.Name + ": " + toDo.Comment;
+                        window.ShowDialog();
                     }
                 }
             }
@@ -907,7 +986,9 @@ namespace TaskList.Views
             }
             else
             {
-                MessageBox.Show("Phone number must include only numbers");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Phone number must include only numbers";
+                window.ShowDialog();
             }
             contactWindow.Hide();
 
@@ -931,7 +1012,9 @@ namespace TaskList.Views
 
             else
             {
-                MessageBox.Show("You don't choose a contact");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "You don't choose a contact";
+                window.ShowDialog();
             }
 
             presenter.SavePerson(person);
@@ -981,12 +1064,16 @@ namespace TaskList.Views
             bool isAdd = true;
             if (nameNoteTB.Text == string.Empty)
             {
-                MessageBox.Show("Name of note can't be empty");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Name of note can't be empty";
+                window.ShowDialog();
             }
 
             else if (noteTB.Text == string.Empty)
             {
-                MessageBox.Show("Note can't be empty");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Note can't be empty";
+                window.ShowDialog();
             }
             else
             {
@@ -995,7 +1082,9 @@ namespace TaskList.Views
                     if (note.Title == nameNoteTB.Text)
                     {
                         isAdd = false;
-                        MessageBox.Show("You can't add notes with the same name");
+                        dialogWindow window = new dialogWindow();
+                        window.dialogMessage.Text = "You can't add notes with the same name";
+                        window.ShowDialog();
                         break;
                     }
                 }
@@ -1013,7 +1102,9 @@ namespace TaskList.Views
         {
             if (notesLB.SelectedItem == null)
             {
-                MessageBox.Show("You don't choose any note");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "You don't choose any note";
+                window.ShowDialog();
             }
 
             else
@@ -1036,7 +1127,9 @@ namespace TaskList.Views
         {
             if (notesLB.SelectedItem == null)
             {
-                MessageBox.Show("You don't choose any note");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "You don't choose any note";
+                window.ShowDialog();
             }
 
             else
@@ -1060,15 +1153,34 @@ namespace TaskList.Views
             SaveFileDialog fileDialog = new SaveFileDialog();
             fileDialog.Filter = "Txt files(*.txt)|*.txt";
             fileDialog.ShowDialog();
-            presenter.SaveNote(fileDialog.FileName, noteTB.Text);
+            try
+            {
+                presenter.SaveNote(fileDialog.FileName, noteTB.Text);
+
+            }
+            catch (Exception ex)
+            {
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = ex.Message;
+                window.ShowDialog();
+            }
         }
 
         public void LoadNote()
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
-            fileDialog.Filter = "Txt files(*.txt)|*txt|All files(*.*)|*.*";
+            fileDialog.Filter = "Txt files(*.txt)|*.txt|All files(*.*)|*.*";
             fileDialog.ShowDialog();
-            noteTB.Text = presenter.LoadNote(fileDialog.FileName);
+            try
+            {
+                noteTB.Text = presenter.LoadNote(fileDialog.FileName);
+            }
+            catch (Exception ex)
+            {
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = ex.Message;
+                window.ShowDialog();
+            }
         }
 
         public void HamburgerMenu()
@@ -1097,6 +1209,7 @@ namespace TaskList.Views
             HideAll();
             personSP_1.Visibility = Visibility.Visible;
             personSP_2.Visibility = Visibility.Visible;
+            personAvatarSP.Visibility = Visibility.Visible;
         }
 
         public void ShowTasks()
@@ -1117,9 +1230,12 @@ namespace TaskList.Views
             levelPB.Visibility = Visibility.Visible;
             countOfComplitedTasksLabel_1.Visibility = Visibility.Visible;
             countOfComplitedTasksLabel_2.Visibility = Visibility.Visible;
+            xpCount.Visibility = Visibility.Visible;
+            Xplabel.Visibility = Visibility.Visible;
 
             levelLabel_2.Content = person.Level;
             countOfComplitedTasksLabel_2.Content = person.CountOfComplitedTasks;
+            xpCount.Content = person.XP;
         }
 
         public void ShowMotivation()
@@ -1147,6 +1263,8 @@ namespace TaskList.Views
 
         public void AddTask()
         {
+            addTaskWindow.levelCB.Items.Clear();
+
             addTaskWindow.levelCB.Items.Add("Low");
             addTaskWindow.levelCB.Items.Add("Normal");
             addTaskWindow.levelCB.Items.Add("High");
@@ -1178,7 +1296,7 @@ namespace TaskList.Views
         {
             if (passwordWindow.passBox.Password != person.Password)
             {
-                this.Close();
+                Application.Current.Shutdown();
             }
         }
 
@@ -1234,6 +1352,10 @@ namespace TaskList.Views
                 changeTaskWindow.Resources.MergedDictionaries.Clear();
                 changeTaskWindow.Resources.MergedDictionaries.Add(newRes);
 
+                phraseWindow.Resources.MergedDictionaries.Clear();
+                phraseWindow.Resources.MergedDictionaries.Add(newRes);
+
+
                 changeTheme.Background = new SolidColorBrush(Colors.LightBlue);
 
                 gradientBrush.GradientStops.Add(new GradientStop(Colors.White, 0));
@@ -1245,6 +1367,7 @@ namespace TaskList.Views
                 phraseWindow.Background = gradientBrush;
                 passwordWindow.Background = gradientBrush;
                 menuColumn.Background = gradientBrush;
+                contactWindow.Background = gradientBrush;
 
                 mcChart.Background = new SolidColorBrush(Colors.LightSteelBlue);
             }
@@ -1272,7 +1395,7 @@ namespace TaskList.Views
                 changeTheme.Background = new SolidColorBrush(Colors.DarkGray);
                 changeTheme.Foreground = new SolidColorBrush(Colors.LightBlue);
 
-                gradientBrush.GradientStops.Add(new GradientStop(System.Windows.Media.Color.FromRgb(69,69,69), 0));
+                gradientBrush.GradientStops.Add(new GradientStop(System.Windows.Media.Color.FromRgb(69, 69, 69), 0));
                 gradientBrush.GradientStops.Add(new GradientStop(System.Windows.Media.Color.FromRgb(45, 45, 45), 1));
                 this.Background = gradientBrush;
                 addTaskWindow.Background = gradientBrush;
@@ -1285,7 +1408,9 @@ namespace TaskList.Views
             }
             else
             {
-                MessageBox.Show("Please choose a theme");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Please choose a theme";
+                window.ShowDialog();
             }
         }
 
@@ -1367,24 +1492,26 @@ namespace TaskList.Views
 
         public void CalculateCurrency()
         {
-            if(valueOneTB.Text==string.Empty)
+            if (valueOneTB.Text == string.Empty)
             {
-                MessageBox.Show("Money value can't be empty");
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Money value can't be empty";
+                window.ShowDialog();
             }
             else
             {
                 double value;
-                if(double.TryParse(valueOneTB.Text,out value))
+                if (double.TryParse(valueOneTB.Text, out value))
                 {
-                    double valueCur=1;
-                    double changeCur=1;
+                    double valueCur = 1;
+                    double changeCur = 1;
                     foreach (var cur in currencies.Rates)
                     {
-                        if(valueOneCB.SelectedItem.ToString() == cur.Key)
+                        if (valueOneCB.SelectedItem.ToString() == cur.Key)
                         {
                             valueCur = cur.Value;
                         }
-                        if(valueTwoCB.SelectedItem.ToString()==cur.Key)
+                        if (valueTwoCB.SelectedItem.ToString() == cur.Key)
                         {
                             changeCur = cur.Value;
                         }
@@ -1394,7 +1521,9 @@ namespace TaskList.Views
                 }
                 else
                 {
-                    MessageBox.Show("Money value is not a number");
+                    dialogWindow window = new dialogWindow();
+                    window.dialogMessage.Text = "Money value is not a number";
+                    window.ShowDialog();
                 }
             }
         }
@@ -1420,26 +1549,26 @@ namespace TaskList.Views
 
             WeatherStates weatherStates = CalculateWeatherState(weather);
 
-            if(weatherStates == WeatherStates.clear)
+            if (weatherStates == WeatherStates.clear)
             {
-                weatherImg.Source = new BitmapImage(new Uri(@"../Images/sunnyWeatherImg.png",UriKind.RelativeOrAbsolute));
+                weatherImg.Source = new BitmapImage(new Uri(@"../Images/sunnyWeatherImg.png", UriKind.RelativeOrAbsolute));
                 weatherLabel.Content = "Clear";
             }
 
-            else if(weatherStates==WeatherStates.partlyCloudy)
+            else if (weatherStates == WeatherStates.partlyCloudy)
             {
                 weatherImg.Source = new BitmapImage(new Uri(@"../Images/CloudySunnyWeatherImg.png", UriKind.RelativeOrAbsolute));
                 weatherLabel.Content = "Partly Cloudy";
             }
 
-            else if(weatherStates==WeatherStates.cloudy)
+            else if (weatherStates == WeatherStates.cloudy)
             {
                 weatherImg.Source = new BitmapImage(new Uri(@"../Images/CloudyWeatherImg.png", UriKind.RelativeOrAbsolute));
                 weatherLabel.Content = "Cloudy";
             }
-            else if(weatherStates==WeatherStates.rainy)
+            else if (weatherStates == WeatherStates.rainy)
             {
-                weatherImg.Source=new BitmapImage(new Uri(@"../Images/RainyWeatherImg.png", UriKind.RelativeOrAbsolute));
+                weatherImg.Source = new BitmapImage(new Uri(@"../Images/RainyWeatherImg.png", UriKind.RelativeOrAbsolute));
                 weatherLabel.Content = "Rainy";
             }
             else
@@ -1458,28 +1587,179 @@ namespace TaskList.Views
         public WeatherStates CalculateWeatherState(Weather weather)
         {
             WeatherStates weatherStates = WeatherStates.clear;
-            if(weather.Current.CloudCover <= 15)
+            if (weather.Current.CloudCover <= 15)
             {
                 weatherStates = WeatherStates.clear;
             }
-            else if(weather.Current.CloudCover > 15 && weather.Current.CloudCover<= 30)
+            else if (weather.Current.CloudCover > 15 && weather.Current.CloudCover <= 30)
             {
                 weatherStates = WeatherStates.partlyCloudy;
             }
-            else if(weather.Current.CloudCover>30&&weather.Current.Humidity<=50)
+            else if (weather.Current.CloudCover > 30 && weather.Current.Humidity <= 50)
             {
                 weatherStates = WeatherStates.cloudy;
             }
-            else if(weather.Current.CloudCover>30&&weather.Current.Humidity>50&&weather.Current.Temperature>=0)
+            else if (weather.Current.CloudCover > 30 && weather.Current.Humidity > 50 && weather.Current.Temperature >= 0)
             {
                 weatherStates = WeatherStates.rainy;
             }
-            else if(weather.Current.CloudCover>30&&weather.Current.Humidity>50&&weather.Current.Temperature<0)
+            else if (weather.Current.CloudCover > 30 && weather.Current.Humidity > 50 && weather.Current.Temperature < 0)
             {
                 weatherStates = WeatherStates.snowy;
             }
 
             return weatherStates;
+        }
+
+        public void ChangeAvatar()
+        {
+            OpenFileDialog fileDialog = new OpenFileDialog();
+            fileDialog.Filter = "Png files(*.png)|*.png|Jpg files(*.jpg)|*.jpg|Ico files(*.ico)|*.ico|All files(*.*)|*.*";
+            fileDialog.ShowDialog();
+
+            if(fileDialog.FileName == string.Empty)
+            {
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "You don't choose a file";
+                window.ShowDialog();
+            }
+            else
+            {
+                person.Avatar = fileDialog.FileName;
+                presenter.SavePerson(person);
+            }
+        }
+
+        public void RemoveAvatar()
+        {
+            person.Avatar = @"..\..\..\Images\personImg.png";
+            presenter.SavePerson(person);
+        }
+
+        private void changeAvatarBtn_Click(object sender, RoutedEventArgs e)
+        {
+            presenter.ChangeAvatar();
+            presenter.RestartApp();
+        }
+
+        private void removeAvatarBtn_Click(object sender, RoutedEventArgs e)
+        {
+            presenter.RemoveAvatar();
+            presenter.RestartApp();
+        }
+
+        public void RestartApp()
+        {
+            System.Diagnostics.Process.Start(Application.ResourceAssembly.Location);
+            Application.Current.Shutdown();
+        }
+
+        private void addUserInPassWindow(object sender, RoutedEventArgs e)
+        {
+            presenter.AddUserInPassWindow();
+        }
+
+        public void AddUserInPassWindow()
+        {
+            addUserWindow.addBtn.Click += AddUserInPassWindow_Click;
+            addUserWindow.ShowDialog();
+        }
+
+        public void AddUserInPassWindow_Click()
+        {
+            People people = new People();
+
+            bool isAdd = true;
+            foreach (var p in people.people)
+            {
+                if (addUserWindow.nameTB.Text == p.Name)
+                {
+                    dialogWindow window = new dialogWindow();
+                    window.dialogMessage.Text = "You can't add users with the same name";
+                    window.ShowDialog();
+                    isAdd = false;
+                    break;
+                }
+            }
+
+            if (String.IsNullOrWhiteSpace(addUserWindow.nameTB.Text))
+            {
+                isAdd = false;
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Name field is empty";
+                window.ShowDialog();
+            }
+
+            else if (String.IsNullOrWhiteSpace(addUserWindow.surnameTB.Text))
+            {
+                isAdd = false;
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Surname field is empty";
+                window.ShowDialog();
+            }
+
+            else if (String.IsNullOrWhiteSpace(addUserWindow.ageTB.Text))
+            {
+                isAdd = false;
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Age field is empty";
+                window.ShowDialog();
+            }
+            else if (String.IsNullOrWhiteSpace(addUserWindow.passTB.Text))
+            {
+                isAdd = false;
+                dialogWindow window = new dialogWindow();
+                window.dialogMessage.Text = "Password field is empty";
+                window.ShowDialog();
+            }
+
+
+            if (isAdd)
+            {
+                int age;
+                if (!int.TryParse(addUserWindow.ageTB.Text, out age))
+                {
+                    dialogWindow window = new dialogWindow();
+                    window.dialogMessage.Text = "Age is not a number";
+                    window.ShowDialog();
+                    age = 0;
+                }
+                else
+                {
+
+                }
+                presenter.AddUser(addUserWindow.nameTB.Text, addUserWindow.surnameTB.Text, age, addUserWindow.passTB.Text);
+
+                People updatedPeople = new People();
+                foreach (var p in updatedPeople.people)
+                {
+                    if (addUserWindow.nameTB.Text == p.Name)
+                    {
+                        this.person = p;
+                    }
+                }
+
+
+                presenter.SavePerson(person);
+
+                addUserWindow.Close();
+                RestartApp();
+            };
+        }
+
+        public void AddUserInPassWindow_Click(object sender, RoutedEventArgs e)
+        {
+            presenter.AddUserInPassWindow_Click();
+        }
+
+        private void helpBtn_Click(object sender, RoutedEventArgs e)
+        {
+            presenter.ShowManual();
+        }
+
+        public void ShowManual()
+        {
+            Process.Start(@"..\..\..\READ ME.txt");
         }
     }
 }

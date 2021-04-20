@@ -176,6 +176,7 @@
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type DataGrid}">
@@ -295,13 +296,13 @@
             </Setter.Value>
         </Setter>
 
-        <Setter Property="FontSize" Value="15"/>
+        <Setter Property="FontSize" Value="25"/>
         <Setter Property="FontFamily" Value="Comic Sans MS"/>
         <Setter Property="FontStretch" Value="UltraCondensed"/>
 
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="FontSize" Value="30"/>
             </Trigger>
 
 
@@ -402,6 +403,7 @@
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="15"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type ListBox}">
@@ -448,7 +450,9 @@
         <Setter Property="AllowDrop" Value="true"/>
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-        
+        <Setter Property="Height" Value="40"/>
+        <Setter Property="FontSize" Value="15"/>
+
         <Setter Property="FontFamily" Value="Comic Sans MS"/>
         <Setter Property="Template">
             <Setter.Value>

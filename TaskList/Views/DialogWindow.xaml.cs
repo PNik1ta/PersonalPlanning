@@ -15,18 +15,18 @@ using System.Windows.Shapes;
 namespace TaskList.Views
 {
     /// <summary>
-    /// Interaction logic for PasswordWindow.xaml
+    /// Interaction logic for dialogWindow.xaml
     /// </summary>
-    public partial class PasswordWindow : Window
+    public partial class dialogWindow : Window
     {
-        public PasswordWindow()
+        public dialogWindow()
         {
             InitializeComponent();
         }
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void OkBtn_Click(object sender, RoutedEventArgs e)
         {
-            //Application.Current.Shutdown();
+            this.Close();
         }
     }
 }

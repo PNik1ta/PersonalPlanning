@@ -32,16 +32,16 @@
                     <GradientStop Color="#FFBFFBFB" Offset="1"/>
                 </LinearGradientBrush>
             </StackPanel.Background>
-            <Label Content="Title" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
-            <Label Content="Date" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
+            <Label Content="Title" Margin="0 10 0 0" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
+            <Label Content="Date" Margin="0 10 0 0" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
             <Label Content="Level" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
             <Label Content="Comment" HorizontalAlignment="Center" Style="{StaticResource LabelStyle}"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <TextBox x:Name="titleTB" Margin="0 10" Height="25" Style="{StaticResource TBStyle}"/>
-            <wpfTool:DateTimePicker x:Name="dateDP" Margin="0 10" Height="25" />
-            <ComboBox x:Name="levelCB" Margin="0 10" Height="25">
+            <TextBox x:Name="titleTB" Margin="0 10 15 10" Style="{StaticResource TBStyle}"/>
+            <wpfTool:DateTimePicker x:Name="dateDP" Margin="0 10 15 10" Height="25"/>
+            <ComboBox x:Name="levelCB" Margin="0 10 15 10" Height="25">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                         <GradientStop Color="#FF7CF9FF" Offset="0"/>
@@ -49,7 +49,7 @@
                     </LinearGradientBrush>
                 </ComboBox.Background>
             </ComboBox>
-            <TextBox x:Name="commentTB" Margin="0 10" Height="100" Style="{StaticResource TBStyle}"/>
+            <TextBox x:Name="commentTB" Margin="0 10 15 10" Height="100" Style="{StaticResource TBStyle}"/>
             <CheckBox x:Name="notifyCB" Content="Notify" Template="{DynamicResource CheckBoxTemplate}"></CheckBox>
             <Button x:Name="addBtn" Content="Add" Width="150" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
         </StackPanel>
