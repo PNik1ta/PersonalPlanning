@@ -1759,7 +1759,8 @@ namespace TaskList.Views
 
         public void ShowManual()
         {
-            Process.Start(@"..\..\..\READ ME.txt");
+            HelpWindow helpWindow = new HelpWindow();
+            helpWindow.ShowDialog();
         }
     }
 }
