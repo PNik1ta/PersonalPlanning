@@ -404,7 +404,7 @@ namespace TaskList.Views
             catch (Exception ex)
             {
                 dialogWindow dialog = new dialogWindow();
-                dialog.dialogMessage.Text = connectionString;
+                dialog.dialogMessage.Text = "Can't update data";
                 dialog.ShowDialog();
             }
             finally
@@ -838,7 +838,7 @@ namespace TaskList.Views
             catch (Exception ex)
             {
                 dialogWindow window = new dialogWindow();
-                window.dialogMessage.Text = ex.Message;
+                window.dialogMessage.Text = "Can't remove data";
                 window.ShowDialog();
             }
             finally

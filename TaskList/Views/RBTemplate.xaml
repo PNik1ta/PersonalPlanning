@@ -3,7 +3,7 @@
                     xmlns:local="clr-namespace:TaskList.Views">
     <SolidColorBrush x:Key="NotActiveRectangleColor" Color="#006911"/>
     <SolidColorBrush x:Key="ActiveRectangleColor" Color="#00f027"/>
-    <SolidColorBrush x:Key="DisableRectangleColor" Color="DarkRed"/>
+    <SolidColorBrush x:Key="DisableRectangleColor" Color="Red"/>
     <SolidColorBrush x:Key="ActiveEllipseColor" Color="#e8b200"/>
 
     <ControlTemplate TargetType="CheckBox" x:Key="CheckBoxTemplate">
@@ -44,7 +44,7 @@
                     <Storyboard>
                         <ThicknessAnimation BeginTime="0:0:0" Duration="0:0:0.5" To="0,0,0,0" Storyboard.TargetName="ellipse" Storyboard.TargetProperty="Margin"/>
                         <ColorAnimation
-                            To="OrangeRed"
+                            To="Red"
                             Storyboard.TargetName="rectangle"
                             Storyboard.TargetProperty="Fill.Color" 
                             FillBehavior="HoldEnd"

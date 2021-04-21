@@ -33,7 +33,7 @@
             <TextBox x:Name="titleTB" Margin="0 10 15 0" Style="{StaticResource TBStyle}"></TextBox>
             <DatePicker x:Name="dateDP" Margin="0 10 15 0" Height="25"></DatePicker>
             <ComboBox x:Name="levelCB" Margin="0 10 15 0" Height="25"></ComboBox>
-            <TextBox x:Name="commentTB" Margin="0 10 15 0" Height="100" Style="{StaticResource TBStyle}"></TextBox>
+            <TextBox x:Name="commentTB" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Margin="0 10 15 0" Height="100" Style="{StaticResource TBStyle}"></TextBox>
             <Button x:Name="changeBtn" Content="Change" Width="150" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Margin="0 10 15 0"></Button>
         </StackPanel>
     </Grid>

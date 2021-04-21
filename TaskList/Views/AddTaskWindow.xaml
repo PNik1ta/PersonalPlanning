@@ -49,7 +49,7 @@
                     </LinearGradientBrush>
                 </ComboBox.Background>
             </ComboBox>
-            <TextBox x:Name="commentTB" Margin="0 10 15 10" Height="100" Style="{StaticResource TBStyle}"/>
+            <TextBox x:Name="commentTB" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Visible" Margin="0 10 15 10" Height="100" Style="{StaticResource TBStyle}"/>
             <CheckBox x:Name="notifyCB" Content="Notify" Template="{DynamicResource CheckBoxTemplate}"></CheckBox>
             <Button x:Name="addBtn" Content="Add" Width="150" Height="50" Style="{StaticResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}"/>
         </StackPanel>

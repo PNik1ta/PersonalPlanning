@@ -254,7 +254,7 @@
                                 </VisualState>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="10"/>
+                        <Border BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" CornerRadius="30"/>
                         <Rectangle x:Name="PART_Track"/>
                         <Grid x:Name="PART_Indicator" ClipToBounds="true" HorizontalAlignment="Left">
                             <Rectangle x:Name="Indicator" Fill="{TemplateBinding Foreground}"/>
