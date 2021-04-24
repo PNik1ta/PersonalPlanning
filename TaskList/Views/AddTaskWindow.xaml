@@ -39,8 +39,8 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <TextBox x:Name="titleTB" Margin="0 10 15 10" Style="{StaticResource TBStyle}"/>
-            <wpfTool:DateTimePicker x:Name="dateDP" Margin="0 10 15 10" Height="25"/>
+            <TextBox x:Name="titleTB" Margin="0 10 15 10" Style="{StaticResource TBStyle}" TextChanged="titleTB_TextChanged"/>
+            <wpfTool:DateTimePicker x:Name="dateDP" PreviewTextInput="DatePreviewTextInput" Margin="0 10 15 10" Height="25"/>
             <ComboBox x:Name="levelCB" Margin="0 10 15 10" Height="25">
                 <ComboBox.Background>
                     <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">

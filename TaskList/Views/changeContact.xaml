@@ -28,9 +28,9 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1">
-            <TextBox x:Name="nameTB"  Margin="0 15 15 0" Style="{DynamicResource TBStyle}"/>
+            <TextBox x:Name="nameTB"  Margin="0 15 15 0" Style="{DynamicResource TBStyle}" TextChanged="nameTB_TextChanged"/>
             <TextBox x:Name="surnameTB" Margin="0 15 15 0" Style="{DynamicResource TBStyle}"/>
-            <TextBox x:Name="numberTB"  Margin="0 15 15 0" Style="{DynamicResource TBStyle}"/>
+            <TextBox x:Name="numberTB" PreviewTextInput="DatePreviewTextInput"  Margin="0 15 15 0" Style="{DynamicResource TBStyle}"/>
             <Button x:Name="changeBtn" Content="Change" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Height="50" Margin="0 20 15 0"></Button>
         </StackPanel>
     </Grid>

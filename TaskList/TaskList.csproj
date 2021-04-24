@@ -6,6 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{6974C945-38F7-4322-A773-279844A3289C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
+    <TargetPlatformVersion>8.1</TargetPlatformVersion>
     <RootNamespace>TaskList</RootNamespace>
     <AssemblyName>TaskList</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
@@ -63,6 +64,8 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Windows" />
     <Reference Include="Carbon.Data.Protection, Version=1.4.1.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Carbon.Data.Protection.1.4.1\lib\netstandard2.0\Carbon.Data.Protection.dll</HintPath>
     </Reference>
@@ -151,6 +154,8 @@
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="Windows.Data" />
+    <Reference Include="Windows.UI" />
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -249,6 +254,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="TaskList.Models.Contact">
+    <Position X="12.25" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAEAAAAAAQABAAAAAAAAAAAIAAAAAA=</HashCode>
+      <FileName>Models\Contact.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskList.Models.Currency">
+    <Position X="9.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAABAAAAAAAAQAA=</HashCode>
+      <FileName>Models\Currency.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskList.Models.Current">
+    <Position X="13.75" Y="5.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEBAAAAAIAAABAABQAgSAAAQAAAAAABQAAgAAgAEAAA=</HashCode>
+      <FileName>Models\Current.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskList.Models.IpInfo">
+    <Position X="11.75" Y="6.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ICAAAQAAAAgAAAAAAAIAAAAAAAAgAAABAAAAAAAAIAA=</HashCode>
+      <FileName>Models\IpInfo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskList.Models.IpLocation">
+    <Position X="3" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAgAgAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\IpLocation.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskList.Models.Location">
+    <Position X="5.5" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAgAAAAgAAAAAAABAAAAAQAAAMAAAAAACAABAAAAAA=</HashCode>
+      <FileName>Models\Location.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskList.Models.Note">
+    <Position X="17.5" Y="3.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAACAAAAAA=</HashCode>
+      <FileName>Models\Note.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskList.Models.People">
+    <Position X="14.5" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAgAACAAAAAAAAAAAEAAEA=</HashCode>
+      <FileName>Models\People.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="TaskList.Models.Person">
+    <Position X="9.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JAAgAAAAAAAAAAAAAEQAAAQBRABAAAADIAAAAAAAAAA=</HashCode>
+      <FileName>Models\Person.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskList.Models.Request">
+    <Position X="11.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAACAAAAAAAIAAAAAAAAAAAAAgAAQAAAAAAAAA=</HashCode>
+      <FileName>Models\Request.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskList.Models.ToDo">
+    <Position X="17.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAEEAAAAAAEAAAAAAQAAAAAAAABAAAAAAAAAAA=</HashCode>
+      <FileName>Models\ToDo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskList.Models.Weather">
+    <Position X="7.75" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAKAAAAAAAAAgAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Weather.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="TaskList.Presenters.AppViewPresenter">
+    <Position X="2.25" Y="3.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>RAEADKRAPYAIUAkIAGAJAAQQBByAABTwORBEAgCIBhA=</HashCode>
+      <FileName>Presenters\AppViewPresenter.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="TaskList.Models.IReadWriteFile">
+    <Position X="7.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Models\IReadWriteFile.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="TaskList.Models.IView">
+    <Position X="16.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>xiECDCRAPYAIUAkIAGAJAAAQBByAABTwOBBECgCIBBA=</HashCode>
+      <FileName>Models\IView.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="TaskList.Models.Level">
+    <Position X="10" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAgAAAAAAAAwIAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Models\Level.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="TaskList.Models.WeatherStates">
+    <Position X="6" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEJAAAAAAAAAAAAAABAAAAAAAAAAAAAAIAAAAAAAAAA=</HashCode>
+      <FileName>Models\WeatherStates.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

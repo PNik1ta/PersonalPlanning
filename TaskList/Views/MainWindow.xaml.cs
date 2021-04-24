@@ -1,5 +1,4 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
-using MahApps.Metro.Converters;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
@@ -7,34 +6,19 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Diagnostics;
-using System.Drawing;
-using System.Drawing.Printing;
-using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Net;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.Security.Policy;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Charting;
 using System.Windows.Controls.Primitives;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using TaskList.Models;
 using TaskList.Presenters;
+using Windows.Data.Xml.Dom;
+using Windows.UI.Notifications;
 
 namespace TaskList.Views
 {
@@ -73,10 +57,7 @@ namespace TaskList.Views
             Popup pu = new Popup();
             pu.Child = MyTaskbarIcon;
 
-            WebClient webClient = new WebClient();
-            string url = "http://api.exchangeratesapi.io/v1/latest?access_key=e24c1bfa1ed12df197d85e097991732f";
-            var json = webClient.DownloadString(url);
-            currencies = JsonConvert.DeserializeObject<Currency>(json);
+            
 
             passwordWindow.enterBtn.Click += CheckPass;
             passwordWindow.Closing += PassWindowClosing;
@@ -534,7 +515,7 @@ namespace TaskList.Views
             if (!isAdd)
             {
                 dialogWindow window = new dialogWindow();
-                window.dialogMessage.Text = "You can't add music with the same title";
+                window.dialogMessage.Text = "You can't add task with the same title";
                 window.ShowDialog();
             }
             else
@@ -971,6 +952,20 @@ namespace TaskList.Views
                         dialogWindow window = new dialogWindow();
                         window.dialogMessage.Text = toDo.Name + ": " + toDo.Comment;
                         window.ShowDialog();
+
+                        var xml = $@"<toast>
+                                        <visual>
+                                            <binding template=""ToastImageAndText04"">
+                                                <image id=""1"" src=""..\..\..\Images\toDoImg.ico"" alt=""Notification""/>
+                                                <text id=""1"">{toDo.Name}</text>
+                                                <text id=""2"">{toDo.Comment}</text>
+                                            </binding>
+                                        </visual>
+                                    </toast>";
+                        var toastXml = new XmlDocument();
+                        toastXml.LoadXml(xml);
+                        var toast = new ToastNotification(toastXml);
+                        ToastNotificationManager.CreateToastNotifier("Task").Show(toast);
                     }
                 }
             }
@@ -1152,17 +1147,10 @@ namespace TaskList.Views
         {
             SaveFileDialog fileDialog = new SaveFileDialog();
             fileDialog.Filter = "Txt files(*.txt)|*.txt";
-            fileDialog.ShowDialog();
-            try
+            if(fileDialog.ShowDialog() == true)
             {
                 presenter.SaveNote(fileDialog.FileName, noteTB.Text);
 
-            }
-            catch (Exception ex)
-            {
-                dialogWindow window = new dialogWindow();
-                window.dialogMessage.Text = ex.Message;
-                window.ShowDialog();
             }
         }
 
@@ -1170,17 +1158,10 @@ namespace TaskList.Views
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Txt files(*.txt)|*.txt|All files(*.*)|*.*";
-            fileDialog.ShowDialog();
-            try
-            {
+            if(fileDialog.ShowDialog() == true)
+            { 
                 noteTB.Text = presenter.LoadNote(fileDialog.FileName);
-            }
-            catch (Exception ex)
-            {
-                dialogWindow window = new dialogWindow();
-                window.dialogMessage.Text = ex.Message;
-                window.ShowDialog();
-            }
+            };
         }
 
         public void HamburgerMenu()
@@ -1481,51 +1462,75 @@ namespace TaskList.Views
 
         public void ShowCurrencies()
         {
-            foreach (var currency in currencies.Rates)
+            try
             {
-                valueOneCB.Items.Add(currency.Key);
-                valueTwoCB.Items.Add(currency.Key);
+                WebClient webClient = new WebClient();
+                string url = "http://api.exchangeratesapi.io/v1/latest?access_key=e24c1bfa1ed12df197d85e097991732f";
+                var json = webClient.DownloadString(url);
+                currencies = JsonConvert.DeserializeObject<Currency>(json);
+                foreach (var currency in currencies.Rates)
+                {
+                    valueOneCB.Items.Add(currency.Key);
+                    valueTwoCB.Items.Add(currency.Key);
+                }
+                valueOneCB.SelectedItem = "USD";
+                valueTwoCB.SelectedItem = "USD";
             }
-            valueOneCB.SelectedItem = "USD";
-            valueTwoCB.SelectedItem = "USD";
+            catch(Exception ex)
+            {
+                dialogWindow dialogWindow = new dialogWindow();
+                dialogWindow.dialogMessage.Text = "Please connect to the network for using currencies feature";
+                dialogWindow.ShowDialog();
+            }
+            
         }
 
         public void CalculateCurrency()
         {
-            if (valueOneTB.Text == string.Empty)
+            try
             {
-                dialogWindow window = new dialogWindow();
-                window.dialogMessage.Text = "Money value can't be empty";
-                window.ShowDialog();
-            }
-            else
-            {
-                double value;
-                if (double.TryParse(valueOneTB.Text, out value))
+                if (valueOneTB.Text == string.Empty)
                 {
-                    double valueCur = 1;
-                    double changeCur = 1;
-                    foreach (var cur in currencies.Rates)
-                    {
-                        if (valueOneCB.SelectedItem.ToString() == cur.Key)
-                        {
-                            valueCur = cur.Value;
-                        }
-                        if (valueTwoCB.SelectedItem.ToString() == cur.Key)
-                        {
-                            changeCur = cur.Value;
-                        }
-                    }
-                    resultExchangeLabel.Content = presenter.CalculateCurrency(value, valueCur, changeCur);
-
+                    dialogWindow window = new dialogWindow();
+                    window.dialogMessage.Text = "Money value can't be empty";
+                    window.ShowDialog();
                 }
                 else
                 {
-                    dialogWindow window = new dialogWindow();
-                    window.dialogMessage.Text = "Money value is not a number";
-                    window.ShowDialog();
+                    double value;
+                    if (double.TryParse(valueOneTB.Text, out value))
+                    {
+                        double valueCur = 1;
+                        double changeCur = 1;
+                        foreach (var cur in currencies.Rates)
+                        {
+                            if (valueOneCB.SelectedItem.ToString() == cur.Key)
+                            {
+                                valueCur = cur.Value;
+                            }
+                            if (valueTwoCB.SelectedItem.ToString() == cur.Key)
+                            {
+                                changeCur = cur.Value;
+                            }
+                        }
+                        resultExchangeLabel.Content = presenter.CalculateCurrency(value, valueCur, changeCur);
+
+                    }
+                    else
+                    {
+                        dialogWindow window = new dialogWindow();
+                        window.dialogMessage.Text = "Money value is not a number";
+                        window.ShowDialog();
+                    }
                 }
             }
+            catch(Exception ex)
+            {
+                dialogWindow dialogWindow = new dialogWindow();
+                dialogWindow.dialogMessage.Text = "Please connect to the network for using currencies feature";
+                dialogWindow.ShowDialog();
+            }
+            
         }
 
         private void calculateMoneyBtn_Click(object sender, RoutedEventArgs e)
@@ -1535,47 +1540,56 @@ namespace TaskList.Views
 
         public void ShowWeather()
         {
-            Weather weather = presenter.GetWeatherData();
-
-            regionLabel.Content = weather.Location.Region;
-            temperatureLabel.Content = weather.Current.Temperature;
-            temperatureLabel.Content += " \u00B0C";
-            windSpeedLabel.Content = weather.Current.WindSpeed;
-            windSpeedLabel.Content += " m/s";
-            visibilityLabel.Content = weather.Current.Visibility;
-            visibilityLabel.Content += " km";
-            cloudcoverLabel.Content = weather.Current.CloudCover;
-            humidityLabel.Content = weather.Current.Humidity;
-
-            WeatherStates weatherStates = CalculateWeatherState(weather);
-
-            if (weatherStates == WeatherStates.clear)
+            try
             {
-                weatherImg.Source = new BitmapImage(new Uri(@"../Images/sunnyWeatherImg.png", UriKind.RelativeOrAbsolute));
-                weatherLabel.Content = "Clear";
+                Weather weather = presenter.GetWeatherData();
+                regionLabel.Content = weather.Location.Region;
+                temperatureLabel.Content = weather.Current.Temperature;
+                temperatureLabel.Content += " \u00B0C";
+                windSpeedLabel.Content = weather.Current.WindSpeed;
+                windSpeedLabel.Content += " m/s";
+                visibilityLabel.Content = weather.Current.Visibility;
+                visibilityLabel.Content += " km";
+                cloudcoverLabel.Content = weather.Current.CloudCover;
+                humidityLabel.Content = weather.Current.Humidity;
+
+                WeatherStates weatherStates = CalculateWeatherState(weather);
+
+                if (weatherStates == WeatherStates.clear)
+                {
+                    weatherImg.Source = new BitmapImage(new Uri(@"../Images/sunnyWeatherImg.png", UriKind.RelativeOrAbsolute));
+                    weatherLabel.Content = "Clear";
+                }
+
+                else if (weatherStates == WeatherStates.partlyCloudy)
+                {
+                    weatherImg.Source = new BitmapImage(new Uri(@"../Images/CloudySunnyWeatherImg.png", UriKind.RelativeOrAbsolute));
+                    weatherLabel.Content = "Partly Cloudy";
+                }
+
+                else if (weatherStates == WeatherStates.cloudy)
+                {
+                    weatherImg.Source = new BitmapImage(new Uri(@"../Images/CloudyWeatherImg.png", UriKind.RelativeOrAbsolute));
+                    weatherLabel.Content = "Cloudy";
+                }
+                else if (weatherStates == WeatherStates.rainy)
+                {
+                    weatherImg.Source = new BitmapImage(new Uri(@"../Images/RainyWeatherImg.png", UriKind.RelativeOrAbsolute));
+                    weatherLabel.Content = "Rainy";
+                }
+                else
+                {
+                    weatherImg.Source = new BitmapImage(new Uri(@"../Images/SnowyWeatherImg.png", UriKind.RelativeOrAbsolute));
+                    weatherLabel.Content = "Snowy";
+                }
+            }
+            catch (Exception)
+            {
+                dialogWindow dialogWindow = new dialogWindow();
+                dialogWindow.dialogMessage.Text = "Please connect to the network for using weather feature";
+                dialogWindow.ShowDialog();
             }
 
-            else if (weatherStates == WeatherStates.partlyCloudy)
-            {
-                weatherImg.Source = new BitmapImage(new Uri(@"../Images/CloudySunnyWeatherImg.png", UriKind.RelativeOrAbsolute));
-                weatherLabel.Content = "Partly Cloudy";
-            }
-
-            else if (weatherStates == WeatherStates.cloudy)
-            {
-                weatherImg.Source = new BitmapImage(new Uri(@"../Images/CloudyWeatherImg.png", UriKind.RelativeOrAbsolute));
-                weatherLabel.Content = "Cloudy";
-            }
-            else if (weatherStates == WeatherStates.rainy)
-            {
-                weatherImg.Source = new BitmapImage(new Uri(@"../Images/RainyWeatherImg.png", UriKind.RelativeOrAbsolute));
-                weatherLabel.Content = "Rainy";
-            }
-            else
-            {
-                weatherImg.Source = new BitmapImage(new Uri(@"../Images/SnowyWeatherImg.png", UriKind.RelativeOrAbsolute));
-                weatherLabel.Content = "Snowy";
-            }
         }
 
         private void weatherBtn_Click(object sender, RoutedEventArgs e)
@@ -1615,15 +1629,7 @@ namespace TaskList.Views
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Png files(*.png)|*.png|Jpg files(*.jpg)|*.jpg|Ico files(*.ico)|*.ico|All files(*.*)|*.*";
-            fileDialog.ShowDialog();
-
-            if(fileDialog.FileName == string.Empty)
-            {
-                dialogWindow window = new dialogWindow();
-                window.dialogMessage.Text = "You don't choose a file";
-                window.ShowDialog();
-            }
-            else
+            if(fileDialog.ShowDialog() == true)
             {
                 person.Avatar = fileDialog.FileName;
                 presenter.SavePerson(person);

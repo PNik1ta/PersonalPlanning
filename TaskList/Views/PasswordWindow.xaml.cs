@@ -22,11 +22,24 @@ namespace TaskList.Views
         public PasswordWindow()
         {
             InitializeComponent();
+            enterBtn.IsEnabled = false;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             //Application.Current.Shutdown();
+        }
+
+        private void passBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(passBox.Password))
+            {
+                enterBtn.IsEnabled = false;
+            }
+            else
+            {
+                enterBtn.IsEnabled = true;
+            }
         }
     }
 }

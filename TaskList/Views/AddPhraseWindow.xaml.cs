@@ -22,6 +22,19 @@ namespace TaskList.Views
         public AddPhraseWindow()
         {
             InitializeComponent();
+            addPhraseBtn.IsEnabled = false;
+        }
+
+        private void authorTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(String.IsNullOrWhiteSpace(authorTB.Text) || String.IsNullOrWhiteSpace(phraseTB.Text))
+            {
+                addPhraseBtn.IsEnabled = false;
+            }
+            else
+            {
+                addPhraseBtn.IsEnabled = true;
+            }
         }
     }
 }

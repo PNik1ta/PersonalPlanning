@@ -22,12 +22,25 @@ namespace TaskList.Views
         public AddUserWindow()
         {
             InitializeComponent();
+            addBtn.IsEnabled = false;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = true;
             this.Hide();
+        }
+
+        private void nameTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (String.IsNullOrWhiteSpace(nameTB.Text) || String.IsNullOrWhiteSpace(passTB.Text))
+            {
+                addBtn.IsEnabled = false;
+            }
+            else
+            {
+                addBtn.IsEnabled = true;
+            }
         }
     }
 }

@@ -34,7 +34,7 @@ namespace TaskList.Presenters
             person.ToDos.Add(toDo);
         }
 
-        public void Save(string name, string surname, int age,string password)
+        public void Save(string name, string surname, int age, string password)
         {
             People people = new People();
             Person person = new Person();
@@ -71,7 +71,7 @@ namespace TaskList.Presenters
             }
             return person;
         }
-        public void AddUser(string pName,string pSurname,int pAge,string pass)
+        public void AddUser(string pName, string pSurname, int pAge, string pass)
         {
             People people = new People();
             Person person = new Person();
@@ -108,7 +108,8 @@ namespace TaskList.Presenters
         }
 
         public void AddData(SqlConnection connection, string connectionString, string authorText, string phraseText)
-        {;
+        {
+            ;
             connection = new SqlConnection(connectionString);
             SqlCommand command = new SqlCommand();
             command.Connection = connection;
@@ -127,17 +128,17 @@ namespace TaskList.Presenters
             contact.Phone = phone;
             person.Contacts.Add(contact);
         }
-        public void RemoveContact(int index,Person person)
+        public void RemoveContact(int index, Person person)
         {
             person.Contacts.RemoveAt(index);
         }
-        public void ChangeContact(int index,Person person,string name,string surname,int phone)
+        public void ChangeContact(int index, Person person, string name, string surname, int phone)
         {
             person.Contacts[index].Name = name;
             person.Contacts[index].Surname = surname;
             person.Contacts[index].Phone = phone;
         }
-        public void AddNote(string title,string text,Person person)
+        public void AddNote(string title, string text, Person person)
         {
             Note note = new Note();
             note.Text = text;
@@ -155,7 +156,7 @@ namespace TaskList.Presenters
             view.ShowPerson();
         }
 
-        public void RemoveNote(int index,Person person)
+        public void RemoveNote(int index, Person person)
         {
             person.Notes.RemoveAt(index);
         }
@@ -175,7 +176,7 @@ namespace TaskList.Presenters
             view.ShowMotivation();
         }
 
-        public void ChangeNote(int index,Person person,string text,string title)
+        public void ChangeNote(int index, Person person, string text, string title)
         {
             person.Notes[index].Text = text;
             person.Notes[index].Title = title;
@@ -191,7 +192,7 @@ namespace TaskList.Presenters
             view.PrintPersonInfo();
         }
 
-        public void SaveNote(string path,string text)
+        public void SaveNote(string path, string text)
         {
             using (StreamWriter writer = new StreamWriter(path))
             {
@@ -396,7 +397,7 @@ namespace TaskList.Presenters
             view.ShowCurrencies();
         }
 
-        internal double CalculateCurrency(double value,double valueCurrency,double changeCurrency)
+        internal double CalculateCurrency(double value, double valueCurrency, double changeCurrency)
         {
             return value / valueCurrency * changeCurrency;
         }
@@ -413,11 +414,12 @@ namespace TaskList.Presenters
             string link = "http://api.ipstack.com/" + externalIp + "?access_key=f95743aa8941816e833b1e89e601b7dd&format=1";
             string info = new WebClient().DownloadString(link);
             IpInfo ipInfo = JsonConvert.DeserializeObject<IpInfo>(info);
-
             string weatherLink = "http://api.weatherstack.com/current?access_key=d5119705bf9d6509bad3fb30f4d4f9e1&query=" + ipInfo.Location.Capital;
             string weatherData = new WebClient().DownloadString(weatherLink);
             Weather weather = JsonConvert.DeserializeObject<Weather>(weatherData);
             return weather;
+
+
         }
 
         internal void ShowWeather()
