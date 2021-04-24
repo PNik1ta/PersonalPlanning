@@ -54,6 +54,8 @@ namespace TaskList.Views
             MyTaskbarIcon.PopupActivation = PopupActivationMode.DoubleClick;
             MyTaskbarIcon.Icon = new System.Drawing.Icon(@"..\..\..\Images\toDoImg.ico");
             MyTaskbarIcon.TrayLeftMouseUp += iconOnClick;
+            ContextMenu contextMenu = this.FindResource("cmButton") as ContextMenu;
+            MyTaskbarIcon.ContextMenu = contextMenu;
             Popup pu = new Popup();
             pu.Child = MyTaskbarIcon;
 
@@ -111,8 +113,6 @@ namespace TaskList.Views
 
 
         }
-
-
 
         private void iconOnClick(object sender, RoutedEventArgs e)
         {
@@ -1767,6 +1767,11 @@ namespace TaskList.Views
         {
             HelpWindow helpWindow = new HelpWindow();
             helpWindow.ShowDialog();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }
