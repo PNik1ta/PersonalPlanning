@@ -79,7 +79,7 @@
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="MinWidth" Value="120"/>
         <Setter Property="MinHeight" Value="20"/>
@@ -175,7 +175,7 @@
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Template">
             <Setter.Value>
@@ -297,7 +297,7 @@
         </Setter>
 
         <Setter Property="FontSize" Value="25"/>
-        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontStretch" Value="UltraCondensed"/>
 
         <Style.Triggers>
@@ -435,7 +435,7 @@
         <Setter Property="FontSize" Value="25"/>
         <Setter Property="FontStyle" Value="Italic"/>
         <Setter Property="FontWeight" Value="Bold"/>
-        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
     </Style>
 
 
@@ -454,7 +454,7 @@
         <Setter Property="Height" Value="40"/>
         <Setter Property="FontSize" Value="15"/>
 
-        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type TextBox}">

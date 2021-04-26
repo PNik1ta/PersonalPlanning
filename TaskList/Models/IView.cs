@@ -66,5 +66,6 @@ namespace TaskList.Models
         void AddUserInPassWindow_Click();
         void ShowManual();
         WeatherStates CalculateWeatherState(Weather weather);
+        void CheckCalcCurrenciesBtnEnabled();
     }
 }

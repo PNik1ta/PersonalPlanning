@@ -456,5 +456,10 @@ namespace TaskList.Presenters
         {
             view.ShowManual();
         }
+
+        internal void CheckCalcCurrenciesBtnEnabled()
+        {
+            view.CheckCalcCurrenciesBtnEnabled();
+        }
     }
 }

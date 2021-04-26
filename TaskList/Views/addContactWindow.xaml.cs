@@ -41,6 +41,17 @@ namespace TaskList.Views
 
         private void nameTB_TextChanged(object sender, TextChangedEventArgs e)
         {
+            CheckEnableButton();
+        }
+
+        private void numberTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            CheckEnableButton();
+        }
+
+        //Checking if add button is enabled
+        private void CheckEnableButton()
+        {
             if (String.IsNullOrWhiteSpace(nameTB.Text) || String.IsNullOrWhiteSpace(numberTB.Text))
             {
                 addBtn.IsEnabled = false;

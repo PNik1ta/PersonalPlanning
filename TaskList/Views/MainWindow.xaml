@@ -257,10 +257,10 @@
         </StackPanel>
 
         <StackPanel x:Name="graphicSP" Grid.Column="2" Margin="0,0,105,0">
-            <TextBox x:Name="salaryTB" Margin="0 10 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
-            <TextBox x:Name="foodCostTB" Margin="0 20 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
-            <TextBox x:Name="utilitiesCostTB" Margin="0 20 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
-            <TextBox x:Name="personalCostTB" Margin="0 15 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden"/>
+            <TextBox x:Name="salaryTB" Margin="0 10 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden" TextChanged="salaryTB_TextChanged"/>
+            <TextBox x:Name="foodCostTB" Margin="0 20 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden" TextChanged="foodCostTB_TextChanged"/>
+            <TextBox x:Name="utilitiesCostTB" Margin="0 20 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden" TextChanged="utilitiesCostTB_TextChanged"/>
+            <TextBox x:Name="personalCostTB" Margin="0 15 0 0" Style="{DynamicResource TBStyle}"  Visibility="Hidden" TextChanged="personalCostTB_TextChanged"/>
 
             <Label x:Name="foodPercentCostLabel_2" Margin="0 10 0 0" Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
             <Label x:Name="utilitiesPercentCostLabel_2" Style="{DynamicResource LabelStyle}"  Visibility="Hidden"/>
@@ -353,9 +353,9 @@
             <Label VerticalAlignment="Center" Content="Initial currency" Style="{DynamicResource LabelStyle}" Grid.Column="0" Grid.Row="0"/>
             <Label VerticalAlignment="Center" Content="Translated currency" Style="{DynamicResource LabelStyle}" Grid.Column="0" Grid.Row="1"/>
             <TextBox x:Name="valueOneTB" Margin="0 20 20 20" Grid.Row="0" Grid.Column="1" Style="{DynamicResource TBStyle}"/>
-            <ComboBox Name="valueOneCB" Margin="0 20 100 0" Grid.Row="0" Grid.Column="2" Style="{DynamicResource CBStyle}"/>
-            <ComboBox Name="valueTwoCB" Grid.Column="2" Margin="0 20 100 0" Grid.Row="1" Style="{DynamicResource CBStyle}"/>
-            <Button x:Name="calculateMoneyBtn" Content="Calculate" Grid.Column="1" Margin="0 20 20 20" Grid.Row="2" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="calculateMoneyBtn_Click"></Button>
+            <ComboBox Name="valueOneCB" Height="30" Margin="0 10 100 0" Grid.Row="0" Grid.Column="2" Style="{DynamicResource CBStyle}"/>
+            <ComboBox Name="valueTwoCB" Height="30" Grid.Column="2" Margin="0 10 100 0" Grid.Row="1" Style="{DynamicResource CBStyle}"/>
+            <Button x:Name="calculateMoneyBtn" Content="Calculate" Grid.Column="1" Margin="0 20 20 20" Height="100" Grid.Row="2" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="calculateMoneyBtn_Click"></Button>
             <Label Content="Result" Grid.Row="3" Grid.Column="1" Style="{DynamicResource LabelStyle}"/>
             <Label x:Name="resultExchangeLabel" Grid.Row="3" Grid.Column="2" Style="{DynamicResource LabelStyle}"/>
         </Grid>

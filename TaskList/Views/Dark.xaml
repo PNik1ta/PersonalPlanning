@@ -78,7 +78,7 @@
         <Setter Property="OverridesDefaultStyle" Value="true"/>
         <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Auto"/>
         <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Auto"/>
-        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="MinWidth" Value="120"/>
         <Setter Property="MinHeight" Value="20"/>
@@ -174,7 +174,7 @@
         <Setter Property="RowDetailsVisibilityMode" Value="VisibleWhenSelected"/>
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
-        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Template">
@@ -297,7 +297,7 @@
         </Setter>
 
         <Setter Property="FontSize" Value="25"/>
-        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="Foreground" Value="LightBlue"/>
 
         <Style.Triggers>
@@ -402,7 +402,7 @@
         <Setter Property="ScrollViewer.CanContentScroll" Value="true"/>
         <Setter Property="ScrollViewer.PanningMode" Value="Both"/>
         <Setter Property="Stylus.IsFlicksEnabled" Value="False"/>
-        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
         <Setter Property="FontSize" Value="15"/>
         <Setter Property="Template">
@@ -433,7 +433,7 @@
 
     <Style x:Key="LabelStyle" TargetType="Label">
         <Setter Property="FontSize" Value="25"/>
-        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FontWeight" Value="Bold"/>
         <Setter Property="Foreground" Value="LightBlue"/>
     </Style>
@@ -446,7 +446,7 @@
         <Setter Property="BorderThickness" Value="1"/>
         <Setter Property="KeyboardNavigation.TabNavigation" Value="None"/>
         <Setter Property="HorizontalContentAlignment" Value="Left"/>
-        <Setter Property="FontFamily" Value="Comic Sans MS"/>
+        <Setter Property="FontFamily" Value="Segoe UI"/>
         <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="AllowDrop" Value="true"/>
         <Setter Property="ScrollViewer.PanningMode" Value="VerticalFirst"/>

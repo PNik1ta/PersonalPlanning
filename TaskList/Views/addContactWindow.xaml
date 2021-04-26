@@ -29,7 +29,7 @@
         <StackPanel Grid.Column="1">
             <TextBox x:Name="nameTB" Margin="0 15 15 0" Style="{DynamicResource TBStyle}" TextChanged="nameTB_TextChanged"/>
             <TextBox x:Name="surnameTB" Margin="0 15 15 0" Style="{DynamicResource TBStyle}"/>
-            <TextBox x:Name="numberTB" PreviewTextInput="NumberPreviewTextInput" Margin="0 15 15 0" Style="{DynamicResource TBStyle}"/>
+            <TextBox x:Name="numberTB" PreviewTextInput="NumberPreviewTextInput" Margin="0 15 15 0" Style="{DynamicResource TBStyle}" TextChanged="numberTB_TextChanged"/>
             <Button x:Name="addBtn" Content="Add" Margin="0 15 15 0" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Height="50"></Button>
         </StackPanel>
     </Grid>

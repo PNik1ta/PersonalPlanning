@@ -1,6 +1,7 @@
 ﻿using Hardcodet.Wpf.TaskbarNotification;
 using Microsoft.Win32;
 using Newtonsoft.Json;
+using Notifications.Wpf;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -59,7 +60,7 @@ namespace TaskList.Views
             Popup pu = new Popup();
             pu.Child = MyTaskbarIcon;
 
-            
+
 
             passwordWindow.enterBtn.Click += CheckPass;
             passwordWindow.Closing += PassWindowClosing;
@@ -111,7 +112,7 @@ namespace TaskList.Views
             changeTheme.Items.Add("Light");
             changeTheme.Items.Add("Dark");
 
-
+            calculateCostBtn.IsEnabled = false;
         }
 
         private void iconOnClick(object sender, RoutedEventArgs e)
@@ -862,7 +863,7 @@ namespace TaskList.Views
                || utilitiesCostTB.Text == string.Empty || personalCostTB.Text == string.Empty)
             {
                 dialogWindow window = new dialogWindow();
-                window.dialogMessage.Text = "This fiels can't be empty";
+                window.dialogMessage.Text = "This fields can't be empty";
                 window.ShowDialog();
             }
             else
@@ -949,23 +950,51 @@ namespace TaskList.Views
                         DateTime.Now.Minute == toDo.Date.Value.Minute &&
                         DateTime.Now.Second == toDo.Date.Value.Second)
                     {
-                        dialogWindow window = new dialogWindow();
-                        window.dialogMessage.Text = toDo.Name + ": " + toDo.Comment;
-                        window.ShowDialog();
+                        //dialogWindow window = new dialogWindow();
+                        //window.dialogMessage.Text = toDo.Name + ": " + toDo.Comment;
+                        //window.ShowDialog();
 
-                        var xml = $@"<toast>
-                                        <visual>
-                                            <binding template=""ToastImageAndText04"">
-                                                <image id=""1"" src=""..\..\..\Images\toDoImg.ico"" alt=""Notification""/>
-                                                <text id=""1"">{toDo.Name}</text>
-                                                <text id=""2"">{toDo.Comment}</text>
-                                            </binding>
-                                        </visual>
-                                    </toast>";
-                        var toastXml = new XmlDocument();
-                        toastXml.LoadXml(xml);
-                        var toast = new ToastNotification(toastXml);
-                        ToastNotificationManager.CreateToastNotifier("Task").Show(toast);
+                        var notificationManager = new NotificationManager();
+                        if(toDo.Level == Level.Low)
+                        {
+                            notificationManager.Show(new NotificationContent
+                            {
+                                Title = toDo.Name,
+                                Message = toDo.Comment,
+                                Type = NotificationType.Information
+                            });
+                        }
+
+                        else if(toDo.Level == Level.Normal)
+                        {
+                            notificationManager.Show(new NotificationContent
+                            {
+                                Title = toDo.Name,
+                                Message = toDo.Comment,
+                                Type = NotificationType.Success
+                            });
+                        }
+                        
+                        else if(toDo.Level == Level.High)
+                        {
+                            notificationManager.Show(new NotificationContent
+                            {
+                                Title = toDo.Name,
+                                Message = toDo.Comment,
+                                Type = NotificationType.Warning
+                            });
+                        }
+
+                        else
+                        {
+                            notificationManager.Show(new NotificationContent
+                            {
+                                Title = toDo.Name,
+                                Message = toDo.Comment,
+                                Type = NotificationType.Warning
+                            });
+                        }
+                        
                     }
                 }
             }
@@ -1147,7 +1176,7 @@ namespace TaskList.Views
         {
             SaveFileDialog fileDialog = new SaveFileDialog();
             fileDialog.Filter = "Txt files(*.txt)|*.txt";
-            if(fileDialog.ShowDialog() == true)
+            if (fileDialog.ShowDialog() == true)
             {
                 presenter.SaveNote(fileDialog.FileName, noteTB.Text);
 
@@ -1158,8 +1187,8 @@ namespace TaskList.Views
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Txt files(*.txt)|*.txt|All files(*.*)|*.*";
-            if(fileDialog.ShowDialog() == true)
-            { 
+            if (fileDialog.ShowDialog() == true)
+            {
                 noteTB.Text = presenter.LoadNote(fileDialog.FileName);
             };
         }
@@ -1476,13 +1505,13 @@ namespace TaskList.Views
                 valueOneCB.SelectedItem = "USD";
                 valueTwoCB.SelectedItem = "USD";
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 dialogWindow dialogWindow = new dialogWindow();
                 dialogWindow.dialogMessage.Text = "Please connect to the network for using currencies feature";
                 dialogWindow.ShowDialog();
             }
-            
+
         }
 
         public void CalculateCurrency()
@@ -1524,13 +1553,13 @@ namespace TaskList.Views
                     }
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 dialogWindow dialogWindow = new dialogWindow();
                 dialogWindow.dialogMessage.Text = "Please connect to the network for using currencies feature";
                 dialogWindow.ShowDialog();
             }
-            
+
         }
 
         private void calculateMoneyBtn_Click(object sender, RoutedEventArgs e)
@@ -1629,7 +1658,7 @@ namespace TaskList.Views
         {
             OpenFileDialog fileDialog = new OpenFileDialog();
             fileDialog.Filter = "Png files(*.png)|*.png|Jpg files(*.jpg)|*.jpg|Ico files(*.ico)|*.ico|All files(*.*)|*.*";
-            if(fileDialog.ShowDialog() == true)
+            if (fileDialog.ShowDialog() == true)
             {
                 person.Avatar = fileDialog.FileName;
                 presenter.SavePerson(person);
@@ -1772,6 +1801,42 @@ namespace TaskList.Views
         private void MenuItem_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
+        }
+
+        private void salaryTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            presenter.CheckCalcCurrenciesBtnEnabled();
+        }
+
+        public void CheckCalcCurrenciesBtnEnabled()
+        {
+            if (String.IsNullOrWhiteSpace(salaryTB.Text) || String.IsNullOrWhiteSpace(foodCostTB.Text) ||
+                String.IsNullOrWhiteSpace(utilitiesCostTB.Text) || String.IsNullOrWhiteSpace(personalCostTB.Text))
+            {
+                calculateCostBtn.IsEnabled = false;
+            }
+            else
+            {
+                calculateCostBtn.IsEnabled = true;
+            }
+        }
+
+        private void foodCostTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            presenter.CheckCalcCurrenciesBtnEnabled();
+
+        }
+
+        private void utilitiesCostTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            presenter.CheckCalcCurrenciesBtnEnabled();
+
+        }
+
+        private void personalCostTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            presenter.CheckCalcCurrenciesBtnEnabled();
+
         }
     }
 }
