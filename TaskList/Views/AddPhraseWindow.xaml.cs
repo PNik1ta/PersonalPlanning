@@ -25,6 +25,12 @@ namespace TaskList.Views
             addPhraseBtn.IsEnabled = false;
         }
 
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            this.Hide();
+        }
+
         private void authorTB_TextChanged(object sender, TextChangedEventArgs e)
         {
             CheckEnableButton();

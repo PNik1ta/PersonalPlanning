@@ -7,11 +7,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.Net;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.DataVisualization.Charting;
 using System.Windows.Controls.Primitives;
+using System.Windows.Data;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -41,7 +43,6 @@ namespace TaskList.Views
         private changeContact changeContact = new changeContact();
         public TaskbarIcon MyTaskbarIcon = new TaskbarIcon();
         public string connectionString;
-        public SqlDataAdapter adapter;
         public DataTable phraseTable;
         Currency currencies;
         public MainWindow()
@@ -362,39 +363,10 @@ namespace TaskList.Views
 
         public void UpdateDB()
         {
-            SqlCommandBuilder commandBuilder = new SqlCommandBuilder(adapter);
-            string sql = "select * from Motivation";
-            phraseTable = new DataTable();
-            SqlConnection connection = null;
-            try
+            motivationLB.Items.Clear();
+            foreach (var phrase in presenter.db.Phrases)
             {
-                connection = new SqlConnection(connectionString);
-                SqlCommand command = new SqlCommand(sql, connection);
-                adapter = new SqlDataAdapter(command);
-
-                adapter.InsertCommand = new SqlCommand("sp_InsertPhrase", connection);
-                adapter.InsertCommand.CommandType = CommandType.StoredProcedure;
-                adapter.InsertCommand.Parameters.Add("@author", SqlDbType.NVarChar, 50, "Author");
-                adapter.InsertCommand.Parameters.Add("@phrase", SqlDbType.NVarChar, 1000, "Phrase");
-                SqlParameter parameter = adapter.InsertCommand.Parameters.Add("@id", SqlDbType.Int, 0, "Id");
-                parameter.Direction = ParameterDirection.Output;
-
-                connection.Open();
-                adapter.Fill(phraseTable);
-                motivationDG.ItemsSource = phraseTable.DefaultView;
-            }
-            catch (Exception ex)
-            {
-                dialogWindow dialog = new dialogWindow();
-                dialog.dialogMessage.Text = "Can't update data";
-                dialog.ShowDialog();
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    connection.Close();
-                }
+                motivationLB.Items.Add(phrase.ToString());
             }
         }
 
@@ -810,51 +782,15 @@ namespace TaskList.Views
 
         public void RemoveData()
         {
-            SqlConnection connection = null;
-            try
-            {
-                var cellInfo = motivationDG.SelectedCells[0];
-                string content = (cellInfo.Column.GetCellContent(cellInfo.Item) as TextBlock).Text;
-                presenter.RemoveData(connection, connectionString, content);
-            }
-            catch (Exception ex)
-            {
-                dialogWindow window = new dialogWindow();
-                window.dialogMessage.Text = "Can't remove data";
-                window.ShowDialog();
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    connection.Close();
-                }
-            }
+            presenter.RemoveData(motivationLB.SelectedItem.ToString());
             UpdateDB();
         }
 
         public void AddDataEvent()
         {
-            SqlConnection connection = null;
-            try
-            {
-                presenter.AddData(connection, connectionString, phraseWindow.authorTB.Text, phraseWindow.phraseTB.Text);
-            }
-            catch (Exception ex)
-            {
-                dialogWindow window = new dialogWindow();
-                window.dialogMessage.Text = ex.Message;
-                window.ShowDialog();
-            }
-            finally
-            {
-                if (connection != null)
-                {
-                    connection.Close();
-                }
-            }
-            phraseWindow.Close();
+            presenter.AddData(phraseWindow.authorTB.Text, phraseWindow.phraseTB.Text);
             UpdateDB();
+            phraseWindow.Close();
         }
 
         public void CalculateCost()
@@ -955,7 +891,7 @@ namespace TaskList.Views
                         //window.ShowDialog();
 
                         var notificationManager = new NotificationManager();
-                        if(toDo.Level == Level.Low)
+                        if (toDo.Level == Level.Low)
                         {
                             notificationManager.Show(new NotificationContent
                             {
@@ -965,7 +901,7 @@ namespace TaskList.Views
                             });
                         }
 
-                        else if(toDo.Level == Level.Normal)
+                        else if (toDo.Level == Level.Normal)
                         {
                             notificationManager.Show(new NotificationContent
                             {
@@ -974,8 +910,8 @@ namespace TaskList.Views
                                 Type = NotificationType.Success
                             });
                         }
-                        
-                        else if(toDo.Level == Level.High)
+
+                        else if (toDo.Level == Level.High)
                         {
                             notificationManager.Show(new NotificationContent
                             {
@@ -994,7 +930,7 @@ namespace TaskList.Views
                                 Type = NotificationType.Warning
                             });
                         }
-                        
+
                     }
                 }
             }

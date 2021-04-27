@@ -117,10 +117,12 @@
     <Compile Include="Models\IView.cs" />
     <Compile Include="Models\Level.cs" />
     <Compile Include="Models\Location.cs" />
+    <Compile Include="Models\MotivationDbContext.cs" />
     <Compile Include="Models\Note.cs" />
     <Compile Include="Models\People.cs" />
     <Compile Include="Models\Person.cs" />
     <Compile Include="Models\IReadWriteFile.cs" />
+    <Compile Include="Models\Phrase.cs" />
     <Compile Include="Models\Request.cs" />
     <Compile Include="Models\ToDo.cs" />
     <Compile Include="Models\Weather.cs" />
@@ -176,6 +178,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="ClassDiagram1.cd" />
+    <None Include="Motivations.db">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -330,6 +335,18 @@
     </PackageReference>
     <PackageReference Include="Notifications.Wpf">
       <Version>0.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite">
+      <Version>1.0.113.7</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite.Core">
+      <Version>1.0.113.7</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite.EF6">
+      <Version>1.0.113</Version>
+    </PackageReference>
+    <PackageReference Include="System.Data.SQLite.Linq">
+      <Version>1.0.113</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

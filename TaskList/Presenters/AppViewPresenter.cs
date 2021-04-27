@@ -3,7 +3,9 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Entity;
 using System.Data.SqlClient;
+using System.Data.SQLite;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -22,6 +24,12 @@ namespace TaskList.Presenters
     class AppViewPresenter
     {
         public IView view;
+        public MotivationDbContext db;
+        public AppViewPresenter()
+        {
+            db = new MotivationDbContext();
+            db.Phrases.Load();
+        }
 
         public void AddTask(string name, string comment, DateTime? date, Level level, bool? isNotify, Person person)
         {
@@ -94,31 +102,28 @@ namespace TaskList.Presenters
             person.LevelUp();
             person.XPUp();
         }
-        public void RemoveData(SqlConnection connection, string connectionString, string content)
+        public void RemoveData(string data)
         {
-            connection = new SqlConnection(connectionString);
-            SqlCommand command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandType = CommandType.Text;
-            command.Parameters.AddWithValue("@id", int.Parse(content));
-            command.CommandText = "delete from Motivation where Id=@id";
-            connection.Open();
-            command.ExecuteNonQuery();
+            foreach (var phrase in db.Phrases)
+            {
+                Phrase removePhrase = null;
+                if(phrase.ToString() == data)
+                {
+                    removePhrase = phrase;
+                }
+                db.Phrases.Remove(removePhrase);
+                db.SaveChanges();
+            }
 
         }
 
-        public void AddData(SqlConnection connection, string connectionString, string authorText, string phraseText)
+        public void AddData(string authorText, string phraseText)
         {
-            ;
-            connection = new SqlConnection(connectionString);
-            SqlCommand command = new SqlCommand();
-            command.Connection = connection;
-            command.CommandType = CommandType.Text;
-            command.Parameters.AddWithValue("@author", authorText);
-            command.Parameters.AddWithValue("@phrase", phraseText);
-            command.CommandText = "insert into Motivation (Author,Phrase) values (@author,@phrase)";
-            connection.Open();
-            command.ExecuteNonQuery();
+            Phrase phrase = new Phrase();
+            phrase.Author = authorText;
+            phrase.AuthorPhrase = phraseText;
+            db.Phrases.Add(phrase);
+            db.SaveChanges();
         }
         public void AddContact(string name, string surname, int phone, Person person)
         {

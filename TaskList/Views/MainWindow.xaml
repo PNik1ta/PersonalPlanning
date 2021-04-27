@@ -235,7 +235,9 @@
                 <ColumnDefinition Width="0.3*"/>
                 <ColumnDefinition Width="0.3*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid Grid.ColumnSpan="3" Grid.Row="0" Margin="0 30 100 0" x:Name="motivationDG" Style="{DynamicResource DataGridStyle}"/>
+            <ListBox Grid.ColumnSpan="3" Grid.Row="0" Margin="0 30 100 0" x:Name="motivationLB" Style="{StaticResource LBTemplate}">
+                
+            </ListBox>
             <Button x:Name="updateDataBtn" Content="Update" Grid.Column="0" Grid.Row="1" Margin="0 20 50 50" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="updateDataBtn_Click" />
             <Button x:Name="removeDataBtn" Content="Remove" Grid.Column="1" Grid.Row="1" Margin="0 20 50 50" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="removeDataBtn_Click" />
             <Button x:Name="addDataBtn"  Content="Add" Grid.Column="2" Grid.Row="1" Margin="0 20 100 50" Style="{DynamicResource ButtonStyle}" Template="{DynamicResource ButtonTemplate}" Click="addDataBtn_Click" />
